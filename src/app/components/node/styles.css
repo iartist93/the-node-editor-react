@@ -1,0 +1,26 @@
+
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper,
+input[type="color"]::-webkit-color-swatch {
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
