@@ -1,6 +1,6 @@
 import "./styles.css";
 import { useState } from "react";
-import { Socket } from "@/app/components/Socket/Socket";
+import { Socket } from "@/app/components/socket/Socket";
 
 type NumberSocketType = {
   value: number;

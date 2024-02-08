@@ -1,15 +1,21 @@
 import "./styles.css";
 import { useState } from "react";
-import { Socket } from "@/app/components/Socket/Socket";
+import { Socket } from "@/app/components/socket/Socket";
 import cc from "classcat";
 
 type ColorSocketProps = {
+  id: string;
   value: string;
   height?: number;
   name: string;
 };
 
-export function ColorSocket({ value, name, height = 200 }: ColorSocketProps) {
+export function ColorSocket({
+  id,
+  value,
+  name,
+  height = 200,
+}: ColorSocketProps) {
   const [color, setColor] = useState(value);
 
   return (
@@ -30,7 +36,7 @@ export function ColorSocket({ value, name, height = 200 }: ColorSocketProps) {
           <p className={cc(["font-bold"])}>{color}</p>
         </div>
       </div>
-      <Socket id={"4"} type={"output"} datatype={"color"} />
+      <Socket id={id} type={"output"} datatype={"color"} />
     </div>
   );
 }

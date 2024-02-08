@@ -1,4 +1,4 @@
-import "../Socket/styles.css";
+import "@/app/components/socket/styles.css";
 import { NodeRendererProps, nodeTypes } from "@/app/components/node/utils";
 
 export function NodeRenderer({ node }: NodeRendererProps) {
@@ -6,7 +6,7 @@ export function NodeRenderer({ node }: NodeRendererProps) {
 
   return (
     <div
-      className="bg-white border-2 border-black rounded-2xl select-none w-64 flex flex-col"
+      className="opacity-90 bg-white border-2 border-black rounded-2xl select-none w-64 flex flex-col"
       style={{
         position: "absolute",
         left: node.position.x,

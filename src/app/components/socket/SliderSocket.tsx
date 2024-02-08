@@ -1,9 +1,10 @@
 import "./styles.css";
 import { useState } from "react";
-import { Socket } from "@/app/components/Socket/Socket";
+import { Socket } from "@/app/components/socket/Socket";
 import cc from "classcat";
 
 type SliderSocketProps = {
+  id: string;
   value: number;
   name: string;
   min?: number;
@@ -11,6 +12,7 @@ type SliderSocketProps = {
 };
 
 export function SliderSocket({
+  id,
   value,
   name,
   min = 0,
@@ -62,7 +64,7 @@ export function SliderSocket({
           {val}
         </p>
       </div>
-      <Socket id={"2"} type={"output"} datatype={"number"} />
+      <Socket id={id} type={"input"} datatype={"number"} />
     </div>
   );
 }
