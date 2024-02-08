@@ -30,8 +30,10 @@ export const nodeTypes: NodeTypes = {
 
 export const socketColors: SocketColors = {
   default: "#000",
-  number: "#f39c12",
-  color: "#e74c3c",
+  // number: "#f39c12",
+  // color: "#e74c3c",
+  number: "#a3a4c5",
+  color: "#a3a4c5",
   boolean: "#3498db",
   string: "#9b59b6",
   object: "#2ecc71",

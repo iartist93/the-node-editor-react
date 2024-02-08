@@ -22,7 +22,7 @@ export function Socket({ id, type, datatype }: SocketProps) {
         cy={size / 2}
         r={size / 2 - 2}
         fill={socketColors[datatype]}
-        className="stroke-1 stroke-blue-300 hover:stroke-amber-500 hover:stroke-2"
+        className="stroke-1 stroke-indigo-500 hover:stroke-amber-500 hover:stroke-2"
       />
     </svg>
   );

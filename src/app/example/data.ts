@@ -49,12 +49,12 @@ export const nodes: NodeData[] = [
     id: 2,
     type: "custom1",
     data: {
-      name: "NodeRenderer 2",
+      name: "Node 1",
       value: 10,
     },
     position: {
-      x: 500,
-      y: 500,
+      x: 600,
+      y: 100,
     },
   },
 ];
