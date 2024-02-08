@@ -35,7 +35,7 @@ type NodeProps = {
 export const nodes: NodeData[] = [
   {
     id: 1,
-    type: "color",
+    type: "custom1",
     data: {
       name: "NodeRenderer 1",
       color: "#13ab17",
@@ -47,7 +47,7 @@ export const nodes: NodeData[] = [
   },
   {
     id: 2,
-    type: "number",
+    type: "custom1",
     data: {
       name: "NodeRenderer 2",
       value: 10,

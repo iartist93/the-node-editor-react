@@ -1,6 +1,5 @@
 import { NodeData } from "@/app/example/data";
-import { ColorNode } from "@/app/components/node/ColorNode";
-import { NumberNode } from "@/app/components/node/NumberNode";
+import { ExampleNode1 } from "@/app/components/node/ExampleNode1";
 import React from "react";
 
 export type NodeComponentProps = {
@@ -26,8 +25,7 @@ type SocketColors = {
 };
 
 export const nodeTypes: NodeTypes = {
-  color: ColorNode,
-  number: NumberNode,
+  custom1: ExampleNode1,
 };
 
 export const socketColors: SocketColors = {
