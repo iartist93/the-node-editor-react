@@ -1,16 +1,15 @@
-import { NodeRenderer } from "@/app/components/node/NodeRenderer";
-import { NodeData } from "@/app/example/data";
+import {NodeRenderer} from "@/app/components/node/NodeRenderer";
+import {useStore} from "@/app/store";
 
-type NodeWrapperProps = {
-  nodes: NodeData[];
-};
+export function NodeWrapper() {
+    const nodes = useStore((store) => store.nodes);
 
-export function NodeWrapper({ nodes }: NodeWrapperProps) {
-  return (
-    <div>
-      {nodes.map((node, index) => {
-        return <NodeRenderer key={index} node={node} />;
-      })}
-    </div>
-  );
+    return (
+        <div>
+            {nodes.map((node, index) => {
+                // return <pre>{JSON.stringify(node, null, 2)}</pre>
+                return <NodeRenderer key={index} node={node}/>;
+            })}
+        </div>
+    );
 }

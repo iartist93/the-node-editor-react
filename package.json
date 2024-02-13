@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "classcat": "^5.0.4",
+    "immer": "^10.0.3",
     "nanoid": "^5.0.5",
     "next": "14.1.0",
     "react": "^18",

@@ -1,14 +1,22 @@
 "use client";
 
-import { NodeWrapper } from "@/app/components/node/NodeWrapper";
-import { nodes } from "@/app/example/data";
-import { ConnectionWrapper } from "@/app/components/connection/ConnectionWrapper";
+import {useEffect} from "react";
+import {NodeWrapper} from "@/app/components/node/NodeWrapper";
+import {ConnectionWrapper} from "@/app/components/connection/ConnectionWrapper";
+import {useStore} from "@/app/store";
+import {nodes} from "@/app/example/data";
 
 export default function Home() {
-  return (
-    <main className="flex h-screen w-screen">
-      <NodeWrapper nodes={nodes} />
-      <ConnectionWrapper />
-    </main>
-  );
+    const setNodes = useStore((store) => store.setNodes);
+
+    useEffect(() => {
+        setNodes(nodes);
+    }, []);
+
+    return (
+        <main className="flex h-screen w-screen">
+            <NodeWrapper/>
+            <ConnectionWrapper/>
+        </main>
+    );
 }
