@@ -14,6 +14,8 @@ interface EditorStore {
   addNode: (node: any) => void;
   addConnection: (connection: any) => void;
   addSocket: (socket: any) => void;
+
+  updateNodePosition: (nodeId: string, position: any) => void;
 }
 
 const store = (set) => ({
@@ -52,6 +54,19 @@ const store = (set) => ({
       },
       false,
       "addSocket",
+    );
+  },
+
+  updateNodePosition: (nodeId, position) => {
+    set(
+      (state) => {
+        const node = state.nodes.find((node) => node.id === nodeId);
+        if (node) {
+          node.position = position;
+        }
+      },
+      false,
+      "updateNodePosition",
     );
   },
 });

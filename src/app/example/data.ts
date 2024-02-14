@@ -1,5 +1,5 @@
 export type NodeData = {
-  id: number;
+  id: string;
   type: string;
   data: { [key: string]: any };
   position: {
@@ -34,7 +34,7 @@ type NodeProps = {
 
 export const nodes: NodeData[] = [
   {
-    id: 1,
+    id: "1",
     type: "custom1",
     data: {
       name: "NodeRenderer 1",
@@ -46,7 +46,7 @@ export const nodes: NodeData[] = [
     },
   },
   {
-    id: 2,
+    id: "2",
     type: "custom1",
     data: {
       name: "Node 1",

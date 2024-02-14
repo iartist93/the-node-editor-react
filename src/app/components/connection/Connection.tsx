@@ -40,8 +40,8 @@ export function Connection() {
     const targetPosition = sockets.find((socket) => socket.id === "2-2")
       ?.position;
 
-    console.log("sourceEl", sourcePosition);
-    console.log("targetEl", targetPosition);
+    console.log("sourcePosition", sourcePosition);
+    console.log("targetPosition", targetPosition);
 
     if (sourcePosition && targetPosition) {
       setSourcePos(sourcePosition);
