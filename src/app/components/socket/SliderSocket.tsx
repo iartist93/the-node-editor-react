@@ -5,6 +5,7 @@ import cc from "classcat";
 
 type SliderSocketProps = {
   id: string;
+  nodeId: string;
   value: number;
   name: string;
   min?: number;
@@ -13,6 +14,7 @@ type SliderSocketProps = {
 
 export function SliderSocket({
   id,
+  nodeId,
   value,
   name,
   min = 0,
@@ -64,7 +66,7 @@ export function SliderSocket({
           {val}
         </p>
       </div>
-      <Socket id={id} type={"input"} datatype={"number"} />
+      <Socket id={id} nodeId={nodeId} type={"input"} datatype={"number"} />
     </div>
   );
 }

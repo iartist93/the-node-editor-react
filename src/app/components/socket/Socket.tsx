@@ -3,37 +3,67 @@ import cc from "classcat";
 import { useEffect, useRef } from "react";
 import { useStore } from "@/app/store";
 import { nanoid } from "nanoid";
+import { node } from "prop-types";
 
-export function Socket({ id, type, datatype }: SocketProps) {
+export function Socket({ id, nodeId, type, datatype }: SocketProps) {
   const size = 20;
 
-  const socketRef = useRef(null);
   const addSocket = useStore((state) => state.addSocket);
+  const findSocket = useStore((state) => state.findSocket);
+  const findConnection = useStore((state) => state.findConnection);
+  const setActiveConnection = useStore((state) => state.setActiveConnection);
   const addNewConnection = useStore((state) => state.addNewConnection);
   const updateConnection = useStore((state) => state.updateConnection);
 
-  const newConnection = useStore((state) => state.newConnection);
+  const socketRef = useRef(null);
+  const activeConnection = useStore((state) => state.activeConnection);
+
+  const socketConnections = useStore(
+    (store) => findSocket(id)?.connections || [],
+  );
 
   const handleSocketClick = () => {
-    // if(newConnection.sourceNodeId === "" && type === "output")
+    console.log("all connection to socket ", socketConnections);
 
-    if (newConnection) {
-      updateConnection({
-        ...newConnection,
-        targetNodeId: "2",
-        targetSocketId: "1",
-      });
+    if (type === "input" && socketConnections.length > 0) {
+      const connection = findConnection(socketConnections[0]);
+
+      setActiveConnection(connection);
+
+      updateConnection(
+        {
+          ...connection,
+          targetNodeId: null,
+          targetSocketId: null,
+        },
+        "remove-target",
+      );
+
+      return;
+    }
+
+    //TODO: the issue is here as we're playing with an existing connection nota new one
+    if (activeConnection) {
+      if (activeConnection.sourceNodeId === nodeId) return;
+      updateConnection(
+        {
+          ...activeConnection,
+          targetNodeId: nodeId,
+          targetSocketId: id,
+        },
+        "add-target",
+      );
     } else {
       addNewConnection({
         id: nanoid(),
-        sourceNodeId: "1",
-        sourceSocketId: "1",
+        sourceNodeId: nodeId,
+        sourceSocketId: id,
       });
     }
   };
 
   useEffect(() => {
-    addSocket({ id, type, datatype });
+    addSocket({ id, type, datatype, connections: [] });
   }, []);
 
   return (

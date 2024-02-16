@@ -6,12 +6,6 @@ export function ConnectionWrapper() {
 
   return (
     <div className="w-screen h-screen relative pointer-events-none">
-      <Connection
-        sourceNodeId="1"
-        sourceSocketId="1"
-        targetNodeId="2"
-        targetSocketId="2"
-      />
       {connections.map((connection) => (
         <Connection
           key={connection.id}

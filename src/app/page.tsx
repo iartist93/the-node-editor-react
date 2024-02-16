@@ -8,7 +8,11 @@ import { nodes } from "@/app/example/data";
 
 export default function Home() {
   const setNodes = useStore((store) => store.setNodes);
-  const state = useStore((store) => [store.connections, store.newConnection]);
+  const state = useStore((store) => [
+    store.activeConnection,
+    store.connections,
+    store.sockets,
+  ]);
 
   useEffect(() => {
     setNodes(nodes);

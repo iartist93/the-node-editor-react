@@ -21,6 +21,7 @@ type NodeTypes = {
 
 export type SocketProps = {
   id: string;
+  nodeId: string;
   type: string;
   datatype: string;
 };

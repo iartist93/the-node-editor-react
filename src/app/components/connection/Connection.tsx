@@ -34,7 +34,7 @@ const getPath = (
 };
 
 const getSocketPosition = (nodeId: string, socketId: string) => {
-  const el = document.getElementById(`${nodeId}-${socketId}`);
+  const el = document.getElementById(`${socketId}`);
   const bbox = el?.getBoundingClientRect();
   if (bbox) {
     return { x: bbox.x + bbox.width / 2, y: bbox.y + bbox.height / 2 };

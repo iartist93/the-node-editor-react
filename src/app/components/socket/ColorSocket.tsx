@@ -5,6 +5,7 @@ import cc from "classcat";
 
 type ColorSocketProps = {
   id: string;
+  nodeId: string;
   value: string;
   height?: number;
   name: string;
@@ -12,6 +13,7 @@ type ColorSocketProps = {
 
 export function ColorSocket({
   id,
+  nodeId,
   value,
   name,
   height = 200,
@@ -36,7 +38,7 @@ export function ColorSocket({
           <p className={cc(["font-bold"])}>{color}</p>
         </div>
       </div>
-      <Socket id={id} type={"output"} datatype={"color"} />
+      <Socket id={id} nodeId={nodeId} type={"output"} datatype={"color"} />
     </div>
   );
 }

@@ -14,9 +14,15 @@ export function ExampleNode1({ node }: NodeComponentProps) {
     <div className="flex flex-col relative py-3">
       {/*<NumberSocket value={40} />*/}
       {/*<NumberSocket value={40} />*/}
-      <ColorSocket id={node.id + "-1"} value={"#406d73"} name={"color"} />
+      <ColorSocket
+        id={node.id + "-1"}
+        nodeId={node.id}
+        value={"#406d73"}
+        name={"color"}
+      />
       <SliderSocket
         id={node.id + "-2"}
+        nodeId={node.id}
         value={0.3}
         min={0}
         max={1}
