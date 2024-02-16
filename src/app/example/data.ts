@@ -6,7 +6,7 @@ export type NodeData = {
     x: number;
     y: number;
   };
-  dragging: false; // TODO: don't add this we it's a state variable only
+  dragging?: false; // TODO: don't add this we it's a state variable only
 };
 
 /*

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useStore } from "@/app/store";
-import { NodeData } from "@/app/example/data";
+import { useMouse } from "@uidotdev/usehooks";
 
 type ConnectionProps = {
   sourceNodeId: string;
@@ -49,18 +49,26 @@ export function Connection({
   targetSocketId,
 }: ConnectionProps) {
   const findNode = useStore((store) => store.findNode);
-  const sockets = useStore((store) => store.sockets);
 
-  const [sourcePos, setSourcePos] = useState({ x: 0, y: 0 });
-  const [targetPos, setTargetPos] = useState({ x: 0, y: 0 });
+  const [mouse] = useMouse();
+  const [sourcePos, setSourcePos] = useState({ x: mouse.x, y: mouse.y });
+  const [targetPos, setTargetPos] = useState({ x: mouse.x, y: mouse.y });
   const [path, setPath] = useState("");
 
   const sourceNode = useStore((store) => findNode(sourceNodeId));
   const targetNode = useStore((store) => findNode(targetNodeId));
 
   const updatePositions = () => {
-    const sourcePosition = getSocketPosition(sourceNodeId, sourceSocketId);
-    const targetPosition = getSocketPosition(targetNodeId, targetSocketId);
+    let sourcePosition = getSocketPosition(sourceNodeId, sourceSocketId);
+    let targetPosition = getSocketPosition(targetNodeId, targetSocketId);
+
+    if (!targetPosition) {
+      if (mouse.x === 0 && mouse.y === 0 && sourcePosition) {
+        targetPosition = { x: sourcePosition.x, y: sourcePosition.y };
+      } else {
+        targetPosition = { x: mouse.x, y: mouse.y };
+      }
+    }
 
     if (sourcePosition && targetPosition) {
       setSourcePos(sourcePosition);
@@ -77,6 +85,7 @@ export function Connection({
     targetSocketId,
     sourceNode,
     targetNode,
+    mouse,
   ]);
 
   useEffect(() => {
@@ -85,16 +94,14 @@ export function Connection({
   }, [sourcePos, targetPos]);
 
   return (
-    <div className="w-screen h-screen">
-      <svg width="100%" height="100%" className=" border-2 border-black">
-        <path
-          d={path}
-          stroke="black"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
-    </div>
+    <svg width="100%" height="100%" className=" border-2 border-black absolute">
+      <path
+        d={path}
+        stroke="black"
+        strokeWidth="2"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
