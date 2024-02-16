@@ -1,11 +1,15 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools } from "zustand/middleware";
+import { Position } from "@/app/components/node/utils";
+import { NodeData } from "@/app/example/data";
 
 interface EditorStore {
   nodes: any[];
   connections: any[];
   sockets: any[];
+
+  findNode: (nodeId: string) => NodeData;
 
   setNodes: (nodes: any[]) => void;
   setConnections: (connections: any[]) => void;
@@ -15,10 +19,14 @@ interface EditorStore {
   addConnection: (connection: any) => void;
   addSocket: (socket: any) => void;
 
-  updateNodePosition: (nodeId: string, position: any) => void;
+  updateNodePosition: (
+    nodeId: string,
+    position: Position,
+    dragging: boolean,
+  ) => void;
 }
 
-const store = (set) => ({
+const store = (set, get) => ({
   nodes: [],
   connections: [],
   sockets: [],
@@ -28,14 +36,19 @@ const store = (set) => ({
     set({ connections }, false, "setConnections"),
   setSockets: (sockets) => set({ sockets }, false, "setSockets"),
 
-  addNode: (node) =>
+  findNode: (nodeId: string) => {
+    return get().nodes.find((node: NodeData) => node.id === nodeId);
+  },
+
+  addNode: (node) => {
     set(
       (state) => {
         state.nodes.push(node);
       },
       false,
       "addNode",
-    ),
+    );
+  },
 
   addConnection: (connection) => {
     set(
@@ -57,12 +70,17 @@ const store = (set) => ({
     );
   },
 
-  updateNodePosition: (nodeId, position) => {
+  updateNodePosition: (
+    nodeId: string,
+    position: Position,
+    dragging: boolean,
+  ) => {
     set(
-      (state) => {
-        const node = state.nodes.find((node) => node.id === nodeId);
+      (store) => {
+        const node = store.nodes.find((node: NodeData) => node.id === nodeId);
         if (node) {
           node.position = position;
+          node.dragging = dragging;
         }
       },
       false,

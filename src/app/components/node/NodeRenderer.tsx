@@ -1,50 +1,61 @@
 import "@/app/components/socket/styles.css";
-import { NodeRendererProps, nodeTypes } from "@/app/components/node/utils";
+import {
+  NodeRendererProps,
+  nodeTypes,
+  type Position,
+} from "@/app/components/node/utils";
 import { ExampleNode1 } from "@/app/components/node/ExampleNode1";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { select } from "d3-selection";
 import { drag } from "d3-drag";
 import { useStore } from "@/app/store";
 
-type Position = {
-  x: number;
-  y: number;
-};
-
 export function NodeRenderer({ node }: NodeRendererProps) {
   const NodeComponent = nodeTypes[node.type];
   const nodeRef = useRef<HTMLDivElement>(null);
-
   const previousPosition = useRef<Position>({ x: 0, y: 0 });
-
   const updateNodePosition = useStore((store) => store.updateNodePosition);
 
-  const getEventPosition = (event: any): Position => {
+  const [tempPos, setTempPost] = useState({
+    x: node.position.x,
+    y: node.position.y,
+  });
+
+  const getEventPosition = (event: MouseEvent): Position => {
     const x = event.x;
     const y = event.y;
     return { x, y };
   };
 
+  const calculateNewPosition = (position: Position) => {
+    const prevPosition = previousPosition.current;
+
+    const diff = {
+      x: position.x - prevPosition.x,
+      y: position.y - prevPosition.y,
+    };
+
+    return {
+      x: node.position.x + diff.x,
+      y: node.position.y + diff.y,
+    };
+  };
+
+  // NOTE: if we print prevPossition using useState inside useEffect it will work, but inside the event handler won't
   const dragInstance = drag()
     .on("start", (event) => {
       previousPosition.current = getEventPosition(event);
     })
     .on("drag", (event) => {
       const position = getEventPosition(event);
-
-      const diff = {
-        x: position.x - previousPosition.current.x,
-        y: position.y - previousPosition.current.y,
-      };
-
-      const newPosition = {
-        x: node.position.x + diff.x,
-        y: node.position.y + diff.y,
-      };
-
-      updateNodePosition(node.id, newPosition);
+      const newPosition = calculateNewPosition(position);
+      updateNodePosition(node.id, newPosition, true);
     })
-    .on("end", (event) => {});
+    .on("end", (event) => {
+      const position = getEventPosition(event);
+      const newPosition = calculateNewPosition(position);
+      updateNodePosition(node.id, newPosition, false);
+    });
 
   useEffect(() => {
     const nodeSelection = select(nodeRef.current);

@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
 import { useStore } from "@/app/store";
+import { NodeData } from "@/app/example/data";
 
 type ConnectionProps = {
-  sourceId: string;
-  targetId: string;
+  sourceNodeId: string;
+  sourceSocketId: string;
+  targetNodeId: string;
+  targetSocketId: string;
 };
 
 const getPath = (
-  source: { x: number; y: number },
-  target: { x: number; y: number },
+  source: {
+    x: number;
+    y: number;
+  },
+  target: {
+    x: number;
+    y: number;
+  },
 ) => {
   const distance = { x: target.x - source.x, y: target.y - source.y };
   const offsetY = 5;
@@ -24,36 +33,55 @@ const getPath = (
   return `M${source.x} ${source.y} C${control1.x} ${control1.y}, ${control2.x} ${control2.y}, ${target.x} ${target.y}`;
 };
 
-export function Connection() {
+const getSocketPosition = (nodeId: string, socketId: string) => {
+  const el = document.getElementById(`${nodeId}-${socketId}`);
+  const bbox = el?.getBoundingClientRect();
+  if (bbox) {
+    return { x: bbox.x + bbox.width / 2, y: bbox.y + bbox.height / 2 };
+  }
+  return undefined;
+};
+
+export function Connection({
+  sourceNodeId,
+  sourceSocketId,
+  targetNodeId,
+  targetSocketId,
+}: ConnectionProps) {
+  const findNode = useStore((store) => store.findNode);
+  const sockets = useStore((store) => store.sockets);
+
   const [sourcePos, setSourcePos] = useState({ x: 0, y: 0 });
   const [targetPos, setTargetPos] = useState({ x: 0, y: 0 });
   const [path, setPath] = useState("");
 
-  const sockets = useStore((store) => store.sockets);
+  const sourceNode = useStore((store) => findNode(sourceNodeId));
+  const targetNode = useStore((store) => findNode(targetNodeId));
 
-  useEffect(() => {
-    console.log("sockets", sockets);
-
-    const sourcePosition = sockets.find((socket) => socket.id === "1-1")
-      ?.position;
-
-    const targetPosition = sockets.find((socket) => socket.id === "2-2")
-      ?.position;
-
-    console.log("sourcePosition", sourcePosition);
-    console.log("targetPosition", targetPosition);
+  const updatePositions = () => {
+    const sourcePosition = getSocketPosition(sourceNodeId, sourceSocketId);
+    const targetPosition = getSocketPosition(targetNodeId, targetSocketId);
 
     if (sourcePosition && targetPosition) {
       setSourcePos(sourcePosition);
       setTargetPos(targetPosition);
     }
-  }, [sockets]);
+  };
+
+  useEffect(() => {
+    updatePositions();
+  }, [
+    sourceNodeId,
+    sourceSocketId,
+    targetNodeId,
+    targetSocketId,
+    sourceNode,
+    targetNode,
+  ]);
 
   useEffect(() => {
     const p = getPath(sourcePos, targetPos);
     setPath(p);
-
-    console.log("path", p);
   }, [sourcePos, targetPos]);
 
   return (

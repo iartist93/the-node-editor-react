@@ -2,6 +2,11 @@ import { NodeData } from "@/app/example/data";
 import { ExampleNode1 } from "@/app/components/node/ExampleNode1";
 import React from "react";
 
+export type Position = {
+  x: number;
+  y: number;
+};
+
 export type NodeComponentProps = {
   node: NodeData;
 };
