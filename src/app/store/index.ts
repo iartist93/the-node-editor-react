@@ -1,19 +1,24 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools } from "zustand/middleware";
-import { Position } from "@/app/components/node/utils";
-import { NodeData } from "@/app/example/data";
+import {
+  ConnectionData,
+  NodeData,
+  Position,
+  SocketData,
+} from "@/app/components/node/utils";
 
-interface EditorStore {
-  // ------------ state
-  nodes: any[];
-  connections: any[];
-  sockets: any[];
-  activeConnection: any | null;
+interface State {
+  nodes: NodeData[];
+  connections: ConnectionData[];
+  sockets: SocketData[];
+  activeConnection: ConnectionData | null;
+}
 
+interface Actions {
   // ------------ nodes
-  setNodes: (nodes: any[]) => void;
-  addNode: (node: any) => void;
+  setNodes: (nodes: NodeData[]) => void;
+  addNode: (node: NodeData) => void;
   findNode: (nodeId: string) => NodeData;
   updateNodePosition: (
     nodeId: string,
@@ -22,18 +27,18 @@ interface EditorStore {
   ) => void;
 
   // ------------  connections
-  setConnections: (connections: any[]) => void;
-  addConnection: (connection: any) => void;
-  addNewConnection: (connection: any) => void;
-  findConnection: (connectionId: string) => any;
-  updateConnection: (connection: any, action: string) => void;
+  setConnections: (connections: ConnectionData[]) => void;
+  addConnection: (connection: ConnectionData) => void;
+  addNewConnection: (connection: ConnectionData) => void;
+  findConnection: (connectionId: string) => ConnectionData;
+  updateConnection: (connection: ConnectionData, action: string) => void;
   removeConnection: (connectionId: string) => void;
-  setActiveConnection: (connection: any) => void;
+  setActiveConnection: (connection: ConnectionData) => void;
 
   // ------------  sockets
-  setSockets: (sockets: any[]) => void;
-  addSocket: (socket: any) => void;
-  findSocket: (socketId: string) => any;
+  setSockets: (sockets: SocketData[]) => void;
+  addSocket: (socket: SocketData) => void;
+  findSocket: (socketId: string) => SocketData;
   updateSocketConnections: (socketId: string, connectionId: string) => void;
 }
 
@@ -43,9 +48,9 @@ const store = (set, get) => ({
   sockets: [],
   activeConnection: null,
 
-  setNodes: (nodes) => set({ nodes }, false, "setNodes"),
+  setNodes: (nodes: NodeData[]) => set({ nodes }, false, "setNodes"),
 
-  addNode: (node) => {
+  addNode: (node: NodeData) => {
     set(
       (state) => {
         state.nodes.push(node);
@@ -77,10 +82,10 @@ const store = (set, get) => ({
     );
   },
 
-  setConnections: (connections) =>
+  setConnections: (connections: ConnectionData) =>
     set({ connections }, false, "setConnections"),
 
-  updateConnection: (connection: any, action: string) => {
+  updateConnection: (connection: ConnectionData, action: string) => {
     const oldConnection = get().findConnection(connection.id);
 
     set(
@@ -97,45 +102,45 @@ const store = (set, get) => ({
     switch (action) {
       case "add-source":
         get().updateSocketConnections(
-          connection.sourceSocketId,
+          connection.outputSocketId,
           connection.id,
           "add",
         );
         break;
       case "remove-source":
         get().updateSocketConnections(
-          oldConnection.sourceSocketId,
+          oldConnection.outputSocketId,
           oldConnection.id,
           "remove",
         );
         break;
       case "add-target":
         get().updateSocketConnections(
-          connection.targetSocketId,
+          connection.inputSocketId,
           connection.id,
           "add",
         );
         break;
       case "remove-target":
         get().updateSocketConnections(
-          oldConnection.targetSocketId,
+          oldConnection.inputSocketId,
           oldConnection.id,
           "remove",
         );
         break;
     }
 
-    if (!connection.sourceSocketId && !connection.targetSocketId) {
+    if (!connection.outputSocketId && !connection.inputSocketId) {
       get().removeConnection(connection.id);
-    } else if (connection.sourceSocketId && connection.targetSocketId) {
+    } else if (connection.outputSocketId && connection.inputSocketId) {
       set((state) => {
         state.activeConnection = null;
       });
     }
   },
 
-  addConnection: (connection) => {
-    console.log("=================> add connection .........");
+  addConnection: (connection: ConnectionData) => {
+    console.log("=================> add connection ......... ", connection);
     set(
       (state) => {
         state.connections.push(connection);
@@ -145,24 +150,31 @@ const store = (set, get) => ({
     );
   },
 
-  addNewConnection: (connection) => {
+  addNewConnection: (connection: ConnectionData) => {
     console.log(
       "=================> add [[ new ]] connection ......... ",
       connection,
     );
+
     set(
       (state) => {
         state.activeConnection = connection;
         state.connections.push(connection);
+        console.log(
+          "======> now we added a connection ",
+          state.connections.length,
+        );
       },
       false,
       "addNewConnection",
     );
 
+    console.log("======> now we added a connection ", get().connections.length);
+
     get().updateConnection(connection, "add-source");
   },
 
-  setActiveConnection: (connection) => {
+  setActiveConnection: (connection: ConnectionData) => {
     set(
       (state) => {
         state.activeConnection = connection;
@@ -190,7 +202,7 @@ const store = (set, get) => ({
     );
   },
 
-  addSocket: (socket) => {
+  addSocket: (socket: SocketData) => {
     set(
       (state) => {
         state.sockets.push(socket);
@@ -200,7 +212,7 @@ const store = (set, get) => ({
     );
   },
 
-  setSockets: (sockets) => set({ sockets }, false, "setSockets"),
+  setSockets: (sockets: SocketData[]) => set({ sockets }, false, "setSockets"),
 
   findSocket: (socketId: string) => {
     return get().sockets.find((socket) => socket.id === socketId);
@@ -236,4 +248,4 @@ const store = (set, get) => ({
   },
 });
 
-export const useStore = create<EditorStore>()(devtools(immer(store)));
+export const useStore = create<State & Actions>()(devtools(immer(store)));

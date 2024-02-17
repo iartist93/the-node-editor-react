@@ -1,11 +1,11 @@
-import { socketColors, SocketProps } from "@/app/components/node/utils";
+import { socketColors, SocketData } from "@/app/components/node/utils";
 import cc from "classcat";
 import { useEffect, useRef } from "react";
 import { useStore } from "@/app/store";
 import { nanoid } from "nanoid";
 import { node } from "prop-types";
 
-export function Socket({ id, nodeId, type, datatype }: SocketProps) {
+export function Socket({ id, nodeId, type, datatype }: SocketData) {
   const size = 20;
 
   const addSocket = useStore((state) => state.addSocket);
@@ -25,7 +25,8 @@ export function Socket({ id, nodeId, type, datatype }: SocketProps) {
   const handleSocketClick = () => {
     console.log("all connection to socket ", socketConnections);
 
-    if (type === "input" && socketConnections.length > 0) {
+    // if (type === "input" && socketConnections.length > 0) {
+    if (socketConnections.length > 0) {
       const connection = findConnection(socketConnections[0]);
 
       setActiveConnection(connection);
@@ -33,8 +34,8 @@ export function Socket({ id, nodeId, type, datatype }: SocketProps) {
       updateConnection(
         {
           ...connection,
-          targetNodeId: null,
-          targetSocketId: null,
+          inputNodeId: null,
+          inputSocketId: null,
         },
         "remove-target",
       );
@@ -44,26 +45,28 @@ export function Socket({ id, nodeId, type, datatype }: SocketProps) {
 
     //TODO: the issue is here as we're playing with an existing connection nota new one
     if (activeConnection) {
-      if (activeConnection.sourceNodeId === nodeId) return;
+      if (activeConnection.outputNodeId === nodeId) return;
       updateConnection(
         {
           ...activeConnection,
-          targetNodeId: nodeId,
-          targetSocketId: id,
+          inputNodeId: nodeId,
+          inputSocketId: id,
         },
         "add-target",
       );
     } else {
       addNewConnection({
         id: nanoid(),
-        sourceNodeId: nodeId,
-        sourceSocketId: id,
+        outputNodeId: nodeId,
+        outputSocketId: id,
+        inputSocketId: null,
+        inputNodeId: null,
       });
     }
   };
 
   useEffect(() => {
-    addSocket({ id, type, datatype, connections: [] });
+    addSocket({ id, nodeId, type, datatype, connections: [] });
   }, []);
 
   return (

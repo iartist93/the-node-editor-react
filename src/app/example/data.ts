@@ -1,14 +1,3 @@
-export type NodeData = {
-  id: string;
-  type: string;
-  data: { [key: string]: any };
-  position: {
-    x: number;
-    y: number;
-  };
-  dragging?: false; // TODO: don't add this we it's a state variable only
-};
-
 /*
 type NodeProps = {
     id: string;
@@ -32,6 +21,8 @@ type NodeProps = {
     outputs: number;
 };
 */
+
+import { NodeData } from "@/app/components/node/utils";
 
 export const nodes: NodeData[] = [
   {

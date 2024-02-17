@@ -1,4 +1,3 @@
-import { NodeData } from "@/app/example/data";
 import { ExampleNode1 } from "@/app/components/node/ExampleNode1";
 import React from "react";
 
@@ -19,11 +18,31 @@ type NodeTypes = {
   [key: string]: React.FC<{ node: NodeData }>;
 };
 
-export type SocketProps = {
+export type NodeData = {
+  id: string;
+  type: string;
+  data: { [key: string]: any };
+  position: {
+    x: number;
+    y: number;
+  };
+  dragging?: false; // TODO: don't add this we it's a state variable only
+};
+
+export type SocketData = {
   id: string;
   nodeId: string;
   type: string;
   datatype: string;
+  connections: string[];
+};
+
+export type ConnectionData = {
+  id: string;
+  outputNodeId: string | null;
+  outputSocketId: string | null;
+  inputNodeId: string | null;
+  inputSocketId: string | null;
 };
 
 type SocketColors = {

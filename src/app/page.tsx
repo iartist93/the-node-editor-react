@@ -11,7 +11,7 @@ export default function Home() {
   const state = useStore((store) => [
     store.activeConnection,
     store.connections,
-    store.sockets,
+    // store.sockets,
   ]);
 
   useEffect(() => {
