@@ -7,6 +7,7 @@ import {
   Position,
   SocketData,
 } from "@/app/components/node/utils";
+import { nanoid } from "nanoid";
 
 interface State {
   nodes: NodeData[];
@@ -29,9 +30,13 @@ interface Actions {
   // ------------  connections
   setConnections: (connections: ConnectionData[]) => void;
   addConnection: (connection: ConnectionData) => void;
-  addNewConnection: (connection: ConnectionData) => void;
+  addNewConnection: (connectionId: string) => void;
   findConnection: (connectionId: string) => ConnectionData;
-  updateConnection: (connection: ConnectionData, action: string) => void;
+  updateConnection: (
+    connectionId: string,
+    socketId: string,
+    action: string,
+  ) => void;
   removeConnection: (connectionId: string) => void;
   setActiveConnection: (connection: ConnectionData) => void;
 
@@ -85,62 +90,55 @@ const store = (set, get) => ({
   setConnections: (connections: ConnectionData) =>
     set({ connections }, false, "setConnections"),
 
-  updateConnection: (connection: ConnectionData, action: string) => {
-    const oldConnection = get().findConnection(connection.id);
-
+  updateConnection: (
+    connectionId: string,
+    socketId: string,
+    action: string,
+  ) => {
     set(
       (state) => {
-        const index = state.connections.findIndex(
-          (c) => c.id === connection.id,
-        );
-        state.connections[index] = connection;
+        const connection = state.connections.find((c) => c.id === connectionId);
+        const socket = state.sockets.find((s) => s.id === socketId);
+
+        switch (action) {
+          case "disconnect":
+            if (socket.type === "output") {
+              connection.outputSocketId = null;
+              connection.outputNodeId = null;
+            } else {
+              connection.inputNodeId = null;
+              connection.inputSocketId = null;
+            }
+            socket.connections = socket.connections.filter(
+              (c) => c.id === connectionId,
+            );
+            break;
+          case "connect":
+            if (socket.type === "output") {
+              connection.outputNodeId = socket.nodeId;
+              connection.outputSocketId = socket.id;
+            } else {
+              connection.inputNodeId = socket.nodeId;
+              connection.inputSocketId = socket.id;
+            }
+            socket.connections.push(connectionId);
+            break;
+          default:
+            break;
+        }
+
+        if (connection.outputSocketId && connection.inputSocketId) {
+          state.activeConnection = null;
+        } else {
+          state.activeConnection = connection;
+        }
       },
       false,
       "updateConnection",
     );
-
-    switch (action) {
-      case "add-source":
-        get().updateSocketConnections(
-          connection.outputSocketId,
-          connection.id,
-          "add",
-        );
-        break;
-      case "remove-source":
-        get().updateSocketConnections(
-          oldConnection.outputSocketId,
-          oldConnection.id,
-          "remove",
-        );
-        break;
-      case "add-target":
-        get().updateSocketConnections(
-          connection.inputSocketId,
-          connection.id,
-          "add",
-        );
-        break;
-      case "remove-target":
-        get().updateSocketConnections(
-          oldConnection.inputSocketId,
-          oldConnection.id,
-          "remove",
-        );
-        break;
-    }
-
-    if (!connection.outputSocketId && !connection.inputSocketId) {
-      get().removeConnection(connection.id);
-    } else if (connection.outputSocketId && connection.inputSocketId) {
-      set((state) => {
-        state.activeConnection = null;
-      });
-    }
   },
 
   addConnection: (connection: ConnectionData) => {
-    console.log("=================> add connection ......... ", connection);
     set(
       (state) => {
         state.connections.push(connection);
@@ -150,28 +148,27 @@ const store = (set, get) => ({
     );
   },
 
-  addNewConnection: (connection: ConnectionData) => {
-    console.log(
-      "=================> add [[ new ]] connection ......... ",
-      connection,
-    );
-
+  addNewConnection: (socketId: string) => {
     set(
       (state) => {
+        const socket = state.sockets.find((s) => s.id === socketId);
+
+        const connection = {
+          id: nanoid(),
+          outputNodeId: socket.type === "output" ? socket.nodeId : null,
+          outputSocketId: socket.type === "output" ? socket.id : null,
+          inputNodeId: socket.type === "input" ? socket.nodeId : null,
+          inputSocketId: socket.type === "input" ? socket.id : null,
+        };
+
         state.activeConnection = connection;
         state.connections.push(connection);
-        console.log(
-          "======> now we added a connection ",
-          state.connections.length,
-        );
       },
       false,
       "addNewConnection",
     );
 
-    console.log("======> now we added a connection ", get().connections.length);
-
-    get().updateConnection(connection, "add-source");
+    get().updateConnection(get().activeConnection.id, socketId, "connect");
   },
 
   setActiveConnection: (connection: ConnectionData) => {
@@ -216,35 +213,6 @@ const store = (set, get) => ({
 
   findSocket: (socketId: string) => {
     return get().sockets.find((socket) => socket.id === socketId);
-  },
-
-  updateSocketConnections: (
-    socketId: string,
-    connectionId: string,
-    action: string,
-  ) => {
-    console.log("updateSocketConnections", socketId, connectionId, action);
-
-    set(
-      (state) => {
-        const socket = state.sockets.find((s) => s.id === socketId);
-
-        console.log("is socket there? ", socket);
-        if (socket) {
-          if (action === "add") {
-            socket.connections.push(connectionId);
-            console.log("update");
-          } else if (action === "remove") {
-            socket.connections = socket.connections.filter(
-              (c) => c !== connectionId,
-            );
-            console.log("removed");
-          }
-        }
-      },
-      false,
-      "updateSocketConnections",
-    );
   },
 });
 

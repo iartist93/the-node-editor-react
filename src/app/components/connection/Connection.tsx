@@ -36,6 +36,12 @@ export function Connection({
       } else {
         targetPosition = { x: mouse.x, y: mouse.y };
       }
+    } else if (!sourcePosition) {
+      if (mouse.x === 0 && mouse.y === 0 && targetPosition) {
+        sourcePosition = { x: targetPosition.x, y: targetPosition.y };
+      } else {
+        sourcePosition = { x: mouse.x, y: mouse.y };
+      }
     }
 
     if (sourcePosition && targetPosition) {
@@ -65,8 +71,8 @@ export function Connection({
     <svg width="100%" height="100%" className=" border-2 border-black absolute">
       <path
         d={path}
-        stroke="black"
-        strokeWidth="2"
+        stroke="#239"
+        strokeWidth="3"
         fill="none"
         strokeLinecap="round"
       />

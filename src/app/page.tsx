@@ -8,11 +8,7 @@ import { nodes } from "@/app/example/data";
 
 export default function Home() {
   const setNodes = useStore((store) => store.setNodes);
-  const state = useStore((store) => [
-    store.activeConnection,
-    store.connections,
-    // store.sockets,
-  ]);
+  const state = useStore((store) => store);
 
   useEffect(() => {
     setNodes(nodes);
@@ -20,8 +16,8 @@ export default function Home() {
 
   return (
     <main className="flex h-screen w-screen">
-      <NodeWrapper />
       <ConnectionWrapper />
+      <NodeWrapper />
       <pre className="fixed top-0 right-0 h-screen overflow-auto">
         {JSON.stringify(state, null, 2)}
       </pre>

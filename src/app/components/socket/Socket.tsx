@@ -1,9 +1,14 @@
-import { socketColors, SocketData } from "@/app/components/node/utils";
+import {
+  ConnectionData,
+  socketColors,
+  SocketData,
+} from "@/app/components/node/utils";
 import cc from "classcat";
 import { useEffect, useRef } from "react";
 import { useStore } from "@/app/store";
 import { nanoid } from "nanoid";
 import { node } from "prop-types";
+import { act } from "react-dom/test-utils";
 
 export function Socket({ id, nodeId, type, datatype }: SocketData) {
   const size = 20;
@@ -23,45 +28,24 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
   );
 
   const handleSocketClick = () => {
-    console.log("all connection to socket ", socketConnections);
-
-    // if (type === "input" && socketConnections.length > 0) {
-    if (socketConnections.length > 0) {
-      const connection = findConnection(socketConnections[0]);
-
-      setActiveConnection(connection);
-
-      updateConnection(
-        {
-          ...connection,
-          inputNodeId: null,
-          inputSocketId: null,
-        },
-        "remove-target",
-      );
-
+    // rule: don't connect to the self
+    if (
+      activeConnection &&
+      ((type === "output" && activeConnection.outputSocketId === id) ||
+        (type === "input" && activeConnection.inputSocketId === id))
+    ) {
       return;
     }
 
-    //TODO: the issue is here as we're playing with an existing connection nota new one
-    if (activeConnection) {
-      if (activeConnection.outputNodeId === nodeId) return;
-      updateConnection(
-        {
-          ...activeConnection,
-          inputNodeId: nodeId,
-          inputSocketId: id,
-        },
-        "add-target",
-      );
+    if (socketConnections.length > 0) {
+      const connection = findConnection(socketConnections[0]);
+      updateConnection(connection.id, id, "disconnect");
     } else {
-      addNewConnection({
-        id: nanoid(),
-        outputNodeId: nodeId,
-        outputSocketId: id,
-        inputSocketId: null,
-        inputNodeId: null,
-      });
+      if (activeConnection) {
+        updateConnection(activeConnection.id, id, "connect");
+      } else {
+        addNewConnection(id);
+      }
     }
   };
 
