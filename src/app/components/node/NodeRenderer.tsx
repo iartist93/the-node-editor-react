@@ -36,8 +36,6 @@ export function NodeRenderer({ node }: NodeRendererProps) {
       y: position.y - prevPosition.y,
     };
 
-    console.log("editorScale ", editorScale);
-
     return {
       x: node.position.x + diff.x / editorScale,
       y: node.position.y + diff.y / editorScale,

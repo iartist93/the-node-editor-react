@@ -18,7 +18,6 @@ export default function Editor({ children }: { children: ReactNode }) {
       const { transform } = event;
       // select(editorContainer.current).attr("transform", transform);
 
-      console.log(event);
       setEditorScale(transform.k);
 
       editorContainer.current.style.backgroundPosition = `${transform.x}px  ${transform.y}px`;
@@ -38,7 +37,8 @@ export default function Editor({ children }: { children: ReactNode }) {
     <div ref={editorContainer} className="editor-container">
       <div
         ref={canvas}
-        className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-pink-500/20 origin-top-left"
+        id="canvas"
+        className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-pink-500/10 origin-top-left"
       >
         {children}
       </div>
