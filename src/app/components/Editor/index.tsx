@@ -38,7 +38,7 @@ export default function Editor({ children }: { children: ReactNode }) {
       <div
         ref={canvas}
         id="canvas"
-        className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-pink-500/10 origin-top-left"
+        className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden origin-top-left"
       >
         {children}
       </div>

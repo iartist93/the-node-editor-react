@@ -36,10 +36,6 @@ export const getSocketPosition = (
   const el = document.getElementById(`${socketId}`);
   const bbox = el?.getBoundingClientRect();
 
-  if (socketId === "2-2") {
-    console.log(editorScale, " -- ", bbox.x, " -- ", bbox.y);
-  }
-
   if (canvasBBox && bbox) {
     return {
       x: (bbox.x + bbox.width / 2 - canvasBBox.x) / editorScale,
