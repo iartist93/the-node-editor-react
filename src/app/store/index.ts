@@ -14,9 +14,13 @@ interface State {
   connections: ConnectionData[];
   sockets: SocketData[];
   activeConnection: ConnectionData | null;
+  editorScale: number;
 }
 
 interface Actions {
+  // ------------ editor
+  setEditorScale: (scale: number) => void;
+
   // ------------ nodes
   setNodes: (nodes: NodeData[]) => void;
   addNode: (node: NodeData) => void;
@@ -52,6 +56,11 @@ const store = (set, get) => ({
   connections: [],
   sockets: [],
   activeConnection: null,
+  editorScale: 1,
+
+  setEditorScale: (scale: number) => {
+    set({ editorScale: scale });
+  },
 
   setNodes: (nodes: NodeData[]) => set({ nodes }, false, "setNodes"),
 

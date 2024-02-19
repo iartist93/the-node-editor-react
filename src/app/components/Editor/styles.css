@@ -1,0 +1,21 @@
+
+.editor-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #24232c;
+  background-size: 100px 100px;
+  background-position: 0 0;
+  background-blend-mode: difference;
+  background-repeat: repeat;
+  background-image: linear-gradient(#525256 0.1rem, transparent 0.1rem),
+  linear-gradient(90deg, #5a5a5e 0.1rem, transparent 0.1rem);
+}
+
+
+.canvas {
+  
+}

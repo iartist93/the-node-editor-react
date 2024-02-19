@@ -15,6 +15,7 @@ export function NodeRenderer({ node }: NodeRendererProps) {
   const nodeRef = useRef<HTMLDivElement>(null);
   const previousPosition = useRef<Position>({ x: 0, y: 0 });
   const updateNodePosition = useStore((store) => store.updateNodePosition);
+  const editorScale = useStore((store) => store.editorScale);
 
   const [tempPos, setTempPost] = useState({
     x: node.position.x,
@@ -35,9 +36,11 @@ export function NodeRenderer({ node }: NodeRendererProps) {
       y: position.y - prevPosition.y,
     };
 
+    console.log("editorScale ", editorScale);
+
     return {
-      x: node.position.x + diff.x,
-      y: node.position.y + diff.y,
+      x: node.position.x + diff.x / editorScale,
+      y: node.position.y + diff.y / editorScale,
     };
   };
 
