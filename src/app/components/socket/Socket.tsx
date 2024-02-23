@@ -60,6 +60,7 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
       width={size}
       height={size}
       className={cc([
+        "no-drag",
         "absolute top-1/2",
         {
           "right-0 -translate-y-1/2 translate-x-1/2": type === "output",
@@ -73,7 +74,7 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
         cy={size / 2}
         r={size / 2 - 2}
         fill={socketColors[datatype]}
-        className="stroke`-1 stroke-indigo-500 hover:stroke-amber-500 hover:stroke-2"
+        className="no-drag stroke`-1 stroke-indigo-500 hover:stroke-amber-500 hover:stroke-2"
       />
     </svg>
   );

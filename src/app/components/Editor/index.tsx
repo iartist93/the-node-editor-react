@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useRef } from "react";
 import { select } from "d3-selection";
 import { zoom } from "d3-zoom";
 import { useStore } from "@/app/store";
+import { hasParentClass } from "@/app/utils";
 
 export default function Editor({ children }: { children: ReactNode }) {
   const editorContainer = useRef<HTMLDivElement>(null);
@@ -26,6 +27,10 @@ export default function Editor({ children }: { children: ReactNode }) {
       }px ${editorBackgroundSize * transform.k}px`;
 
       canvas.current.style.transform = `matrix(${transform.k}, 0, 0, ${transform.k}, ${transform.x}, ${transform.y})`;
+    })
+    .filter((event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      return !hasParentClass(event, "no-pan");
     });
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { select } from "d3-selection";
 import { drag } from "d3-drag";
 import { useStore } from "@/app/store";
+import { hasParentClass } from "@/app/utils";
 
 export function NodeRenderer({ node }: NodeRendererProps) {
   const NodeComponent = nodeTypes[node.type];
@@ -56,6 +57,11 @@ export function NodeRenderer({ node }: NodeRendererProps) {
       const position = getEventPosition(event);
       const newPosition = calculateNewPosition(position);
       updateNodePosition(node.id, newPosition, false);
+    })
+    .filter((event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      console.log(hasParentClass(event, "no-drag"));
+      return !hasParentClass(event, "no-drag");
     });
 
   useEffect(() => {
@@ -66,19 +72,19 @@ export function NodeRenderer({ node }: NodeRendererProps) {
   return (
     <div
       ref={nodeRef}
-      className="opacity-90 bg-white border-2 border-black rounded-2xl select-none w-64 flex flex-col"
+      className="no-pan node-renderer opacity-90 bg-white border-2 border-black rounded-2xl select-none w-64 flex flex-col"
       style={{
         position: "absolute",
         left: node.position.x,
         top: node.position.y,
       }}
     >
-      <div className="border-b-2 border-black p-4 font-medium h-12 ">
+      <div className="border-b-2 border-black p-4 font-medium h-12">
         <h1>{node.data.name}</h1>
       </div>
       <div className="flex flex-col flex-1 ">
-        {/*<NodeComponent node={node} />*/}
-        <ExampleNode1 node={node} />
+        <NodeComponent node={node} />
+        {/*<ExampleNode1 node={node} />*/}
       </div>
     </div>
   );

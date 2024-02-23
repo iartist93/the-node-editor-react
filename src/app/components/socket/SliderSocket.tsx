@@ -23,7 +23,7 @@ export function SliderSocket({
   const [val, setValue] = useState(value);
 
   return (
-    <div className="flex flex-col relative px-4 my-2">
+    <div className="no-drag flex flex-col relative px-4 my-2">
       <div className="w-full h-6 relative rounded-md overflow-hidden">
         <input
           type="range"

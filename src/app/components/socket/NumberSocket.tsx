@@ -10,7 +10,7 @@ export function NumberSocket({ value }: NumberSocketType) {
   const [val, setValue] = useState(value);
 
   return (
-    <div className="flex flex-col relative px-4 my-2">
+    <div className="no-drag flex flex-col relative px-4 my-2">
       <input
         type="number"
         value={val}

@@ -21,7 +21,7 @@ export function ColorSocket({
   const [color, setColor] = useState(value);
 
   return (
-    <div className="flex flex-col relative px-4 my-2">
+    <div className="no-drag flex flex-col relative px-4 my-2">
       <div
         className="rounded-md overflow-hidden relative"
         style={{ height: `${height}px` }}
