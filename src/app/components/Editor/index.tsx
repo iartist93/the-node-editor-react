@@ -30,7 +30,11 @@ export default function Editor({ children }: { children: ReactNode }) {
     })
     .filter((event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      return !hasParentClass(event, "no-pan");
+      if (hasParentClass(event, "no-pan") && event.type !== "wheel") {
+        return false;
+      } else {
+        return true;
+      }
     });
 
   useEffect(() => {
