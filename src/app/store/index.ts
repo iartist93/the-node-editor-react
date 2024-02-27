@@ -42,6 +42,7 @@ interface Actions {
     action: string,
   ) => void;
   removeConnection: (connectionId: string) => void;
+  removeActiveConnection: () => void;
   setActiveConnection: (connection: ConnectionData) => void;
 
   // ------------  sockets
@@ -205,6 +206,43 @@ const store = (set, get) => ({
       },
       false,
       "removeConnection",
+    );
+  },
+
+  removeActiveConnection: (connectionId: string) => {
+    set(
+      (state) => {
+        if (state.activeConnection) {
+          // get the input socket and output socket for the active connection
+          const inputSocket = state.sockets.find(
+            (socket) => socket.id === state.activeConnection.inputSocketId,
+          );
+          const outputSocket = state.sockets.find(
+            (socket) => socket.id === state.activeConnection.outputSocketId,
+          );
+
+          // remove the active connection from the socket.connections
+          if (inputSocket) {
+            inputSocket.connections = inputSocket.connections.filter(
+              (connectionId) => connectionId !== state.activeConnection.id,
+            );
+          }
+
+          if (outputSocket) {
+            outputSocket.connections = outputSocket.connections.filter(
+              (connectionId) => connectionId !== state.activeConnection.id,
+            );
+          }
+
+          state.connections = state.connections.filter(
+            (connection) => connection.id !== state.activeConnection.id,
+          );
+
+          state.activeConnection = null;
+        }
+      },
+      false,
+      "removeActiveConnection",
     );
   },
 

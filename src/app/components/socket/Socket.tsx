@@ -27,7 +27,9 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
     (store) => findSocket(id)?.connections || [],
   );
 
-  const handleSocketClick = () => {
+  const handleSocketClick = (event: any) => {
+    event.stopPropagation();
+
     // rule: don't connect to the self
     if (
       activeConnection &&

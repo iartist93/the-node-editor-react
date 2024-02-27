@@ -60,7 +60,6 @@ export function NodeRenderer({ node }: NodeRendererProps) {
     })
     .filter((event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      console.log(hasParentClass(event, "no-drag"));
       return !hasParentClass(event, "no-drag");
     });
 

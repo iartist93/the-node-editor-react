@@ -12,6 +12,10 @@ export default function Editor({ children }: { children: ReactNode }) {
   let editorBackgroundSize = 100;
 
   const setEditorScale = useStore((store) => store.setEditorScale);
+  const activeConnection = useStore((store) => store.activeConnection);
+  const removeActiveConnection = useStore(
+    (store) => store.removeActiveConnection,
+  );
 
   const panZoomInstance = zoom()
     .scaleExtent([0.5, 32])
@@ -42,12 +46,19 @@ export default function Editor({ children }: { children: ReactNode }) {
     nodeSelection.call(panZoomInstance);
   }, [panZoomInstance]);
 
+  const handleEditorClick = (event: any) => {
+    if (activeConnection) {
+      removeActiveConnection();
+    }
+  };
+
   return (
     <div ref={editorContainer} className="editor-container">
       <div
         ref={canvas}
         id="canvas"
         className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden origin-top-left"
+        onClick={handleEditorClick}
       >
         {children}
       </div>
