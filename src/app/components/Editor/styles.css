@@ -1,21 +1,38 @@
+/*.editor-container {*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  overflow: hidden;*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  background-color: #24232c;*/
+/*  background-size: 100px 100px;*/
+/*  background-position: 0 0;*/
+/*  background-blend-mode: difference;*/
+/*  background-repeat: repeat;*/
+/*  background-image: linear-gradient(#525256 0.1rem, transparent 0.1rem),*/
+/*  linear-gradient(90deg, #5a5a5e 0.1rem, transparent 0.1rem);*/
+/*}*/
+
 
 .editor-container {
+  --bg-opacity: 1;
   width: 100%;
   height: 100%;
   overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #24232c;
-  background-size: 100px 100px;
+  background-color: #f3f3f3;
+  /*background-color: rgb(162, 162, 169);*/
+  background-size: 40px 40px;
   background-position: 0 0;
-  background-blend-mode: difference;
+  background-blend-mode: multiply;
   background-repeat: repeat;
-  background-image: linear-gradient(#525256 0.1rem, transparent 0.1rem),
-  linear-gradient(90deg, #5a5a5e 0.1rem, transparent 0.1rem);
+  background-image: radial-gradient(circle, rgba(162, 162, 169, var(--bg-opacity)) 0.07rem, rgba(0, 0, 0, 0) 0.07rem);
 }
 
 
 .canvas {
-  
+
 }
