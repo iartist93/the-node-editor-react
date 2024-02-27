@@ -56,14 +56,16 @@ export default function Editor({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div ref={editorContainer} className="editor-container">
-      <div
-        ref={canvas}
-        id="canvas"
-        className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden origin-top-left"
-        onClick={handleEditorClick}
-      >
-        {children}
+    <div className="flex-1 border-r border-stone-200">
+      <div ref={editorContainer} className="editor-container bg-stone-100">
+        <div
+          ref={canvas}
+          id="canvas"
+          className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden origin-top-left"
+          onClick={handleEditorClick}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
