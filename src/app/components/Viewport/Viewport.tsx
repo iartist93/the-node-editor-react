@@ -6,11 +6,13 @@ import { Environment } from "@react-three/drei";
 import { useViewportStore } from "@/app/store/viewport";
 
 export default function Viewport() {
-  const opacity = useViewportStore((state) => state.opacity);
+  const flatShading = useViewportStore((state) => state.flatShading);
 
   return (
     <div className="h-100 w-1/3 bg-stone-100">
-      <h1 className="font-bold text-lg text-blue-950">Opacity {opacity}</h1>
+      <h1 className="font-bold text-lg text-blue-950">
+        flatShading {flatShading ? "true" : "false"}
+      </h1>
       <Canvas>
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
@@ -43,6 +45,15 @@ function Box(props: ThreeElements["mesh"]) {
   const roughness = useViewportStore((state) => state.roughness);
   const metalness = useViewportStore((state) => state.metalness);
   const opacity = useViewportStore((state) => state.opacity);
+  const emissive = useViewportStore((state) => state.emissive);
+  const emissiveIntensity = useViewportStore(
+    (state) => state.emissiveIntensity,
+  );
+  const flatShading = useViewportStore((state) => state.flatShading);
+  const wireframe = useViewportStore((state) => state.wireframe);
+  const wireframeLinewidth = useViewportStore(
+    (state) => state.wireframeLinewidth,
+  );
 
   return (
     <mesh
@@ -60,6 +71,11 @@ function Box(props: ThreeElements["mesh"]) {
         metalness={metalness}
         opacity={opacity}
         transparent={true}
+        emissive={emissive}
+        emissiveIntensity={emissiveIntensity}
+        flatShading={flatShading}
+        wireframe={wireframe}
+        wireframeLinewidth={wireframeLinewidth}
       />
     </mesh>
   );

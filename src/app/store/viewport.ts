@@ -8,6 +8,11 @@ interface State {
   roughness: number;
   metalness: number;
   opacity: number;
+  emissive: Color;
+  emissiveIntensity: number;
+  flatShading: boolean;
+  wireframe: boolean;
+  wireframeLinewidth: number;
 }
 
 interface Actions {
@@ -15,6 +20,11 @@ interface Actions {
   setRoughness: (roughness: number) => void;
   setMetallic: (metallic: number) => void;
   setOpacity: (alpha: number) => void;
+  setEmissive: (emissive: string) => void;
+  setEmissiveIntensity: (emissiveIntensity: number) => void;
+  setFlatShading: (flatShading: boolean) => void;
+  setWireframe: (wireframe: boolean) => void;
+  setWireframeLinewidth: (wireframeLinewidth: number) => void;
 }
 
 const store = (set, get) => ({
@@ -22,6 +32,11 @@ const store = (set, get) => ({
   roughness: 0.5,
   metalness: 0.5,
   opacity: 1.0,
+  emissive: new Color(0, 0, 0),
+  emissiveIntensity: 1.0,
+  flatShading: false,
+  wireframe: false,
+  wireframeLinewidth: 1,
 
   setAlbedo: (albedo: string) =>
     set((state) => {
@@ -30,6 +45,17 @@ const store = (set, get) => ({
   setRoughness: (roughness: number) => set({ roughness }),
   setMetallic: (metalness: number) => set({ metalness }),
   setOpacity: (opacity: number) => set({ opacity }),
+  setEmissive: (emissive: string) =>
+    set((state) => {
+      state.emissive = new Color(emissive);
+    }),
+  setEmissiveIntensity: (emissiveIntensity: number) =>
+    set({ emissiveIntensity }),
+
+  setFlatShading: (flatShading: boolean) => set({ flatShading }),
+  setWireframe: (wireframe: boolean) => set({ wireframe }),
+  setWireframeLinewidth: (wireframeLinewidth: number) =>
+    set({ wireframeLinewidth }),
 });
 
 export const useViewportStore = create<State & Actions>()(

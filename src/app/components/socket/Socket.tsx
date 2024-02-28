@@ -11,7 +11,7 @@ import { node } from "prop-types";
 import { act } from "react-dom/test-utils";
 
 export function Socket({ id, nodeId, type, datatype }: SocketData) {
-  const size = 20;
+  const size = 15;
 
   const addSocket = useStore((state) => state.addSocket);
   const findSocket = useStore((state) => state.findSocket);
@@ -76,7 +76,7 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
         cy={size / 2}
         r={size / 2 - 2}
         fill={socketColors[datatype]}
-        className="no-drag stroke`-1 stroke-indigo-500 hover:stroke-amber-500 hover:stroke-2"
+        className="no-drag stroke-1 stroke-slate-400 hover:stroke-amber-500 hover:stroke-2"
       />
     </svg>
   );
