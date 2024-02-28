@@ -17,7 +17,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex h-screen w-screen overflow-hidden">
+    <main className="flex h-screen w-screen overflow-hidden bg-green-300">
       <Editor>
         <ConnectionWrapper />
         <NodeWrapper />

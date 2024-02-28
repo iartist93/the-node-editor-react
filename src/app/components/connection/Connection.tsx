@@ -90,7 +90,7 @@ export function Connection({
   }, [outputPosition, inputPosition]);
 
   return (
-    <svg width="100%" height="100%" className="absolute">
+    <svg width="100%" height="100%" className="overflow-visible">
       <path
         d={path}
         stroke="#489"
