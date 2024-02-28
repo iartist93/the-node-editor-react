@@ -26,13 +26,14 @@ export function ColorSocket({
         className="rounded-md overflow-hidden relative"
         style={{ height: `${height}px` }}
       >
+        (
         <input
           type="color"
           value={color}
           onChange={(e) => setColor(e.target.value)}
           className="w-full h-full"
         />
-
+        )
         <div className="select-none pointer-events-none absolute left-2 top-2 text-xs text-sky-50">
           <p className={cc(["font-light"])}>{name}</p>
           <p className={cc(["font-bold"])}>{color}</p>

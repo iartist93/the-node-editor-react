@@ -25,8 +25,6 @@ export default function Editor({ children }: { children: ReactNode }) {
 
       setEditorScale(transform.k);
 
-      console.log("scale === ", transform.k);
-
       editorContainer.current.style.backgroundPosition = `${transform.x}px  ${transform.y}px`;
       editorContainer.current.style.backgroundSize = `${
         editorBackgroundSize * transform.k

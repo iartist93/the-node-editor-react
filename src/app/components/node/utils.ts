@@ -1,5 +1,6 @@
 import { ExampleNode1 } from "@/app/components/node/ExampleNode1";
 import React from "react";
+import { PrincipleShader } from "@/app/components/node/PrincipleShader";
 
 export type Position = {
   x: number;
@@ -51,6 +52,7 @@ type SocketColors = {
 
 export const nodeTypes: NodeTypes = {
   custom1: ExampleNode1,
+  shader: PrincipleShader,
 };
 
 export const socketColors: SocketColors = {

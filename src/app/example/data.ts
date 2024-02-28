@@ -29,7 +29,7 @@ export const nodes: NodeData[] = [
     id: "1",
     type: "custom1",
     data: {
-      name: "NodeRenderer 1",
+      name: "Color",
       color: "#13ab17",
     },
     position: {
@@ -39,9 +39,9 @@ export const nodes: NodeData[] = [
   },
   {
     id: "2",
-    type: "custom1",
+    type: "shader",
     data: {
-      name: "Node 1",
+      name: "PinncipleShader 1",
       value: 10,
     },
     position: {

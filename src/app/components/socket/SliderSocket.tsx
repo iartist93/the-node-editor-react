@@ -10,6 +10,7 @@ type SliderSocketProps = {
   name: string;
   min?: number;
   max?: number;
+  onChange?: (value: number) => void;
 };
 
 export function SliderSocket({
@@ -19,8 +20,16 @@ export function SliderSocket({
   name,
   min = 0,
   max = 1,
+  onChange,
 }: SliderSocketProps) {
   const [val, setValue] = useState(value);
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(parseFloat(e.target.value));
+    if (onChange) {
+      onChange(parseFloat(e.target.value));
+    }
+  };
 
   return (
     <div className="no-drag flex flex-col relative px-4 my-2">
@@ -31,7 +40,7 @@ export function SliderSocket({
           max={max}
           step={0.01}
           value={val}
-          onChange={(e) => setValue(parseFloat(e.target.value))}
+          onChange={handleSliderChange}
           className="slider w-full h-full bg-stone-300 outline-0 opacity-70 hover:opacity-100 "
         />
 
