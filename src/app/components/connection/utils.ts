@@ -25,11 +25,7 @@ export const getPath = (
   return `M${source.x} ${source.y} C${control1.x} ${control1.y}, ${control2.x} ${control2.y}, ${target.x} ${target.y}`;
 };
 
-export const getSocketPosition = (
-  nodeId: string,
-  socketId: string,
-  editorScale: number,
-) => {
+export const getSocketPosition = (socketId: string, editorScale: number) => {
   // get the editor DOMRect
   const canvas = document.getElementById("canvas");
   const canvasBBox = canvas?.getBoundingClientRect();
@@ -45,15 +41,17 @@ export const getSocketPosition = (
   return undefined;
 };
 
-export const getTransfromedPosition = (
+export const getTransformedPosition = (
   position: Position,
   editorScale: number,
 ) => {
   const canvas = document.getElementById("canvas");
-  const canvasBBox = canvas.getBoundingClientRect();
+  const canvasBBox = canvas?.getBoundingClientRect();
 
-  return {
-    x: (position.x - canvasBBox.x) / editorScale,
-    y: (position.y - canvasBBox.y) / editorScale,
-  };
+  return canvasBBox
+    ? {
+        x: (position.x - canvasBBox.x) / editorScale,
+        y: (position.y - canvasBBox.y) / editorScale,
+      }
+    : position;
 };

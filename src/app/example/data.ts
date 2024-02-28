@@ -38,6 +38,18 @@ export const nodes: NodeData[] = [
     },
   },
   {
+    id: "3",
+    type: "custom1",
+    data: {
+      name: "Color",
+      color: "#520ccb",
+    },
+    position: {
+      x: 300,
+      y: 600,
+    },
+  },
+  {
     id: "2",
     type: "shader",
     data: {

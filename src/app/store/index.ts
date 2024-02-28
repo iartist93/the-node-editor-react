@@ -24,7 +24,7 @@ interface Actions {
   // ------------ nodes
   setNodes: (nodes: NodeData[]) => void;
   addNode: (node: NodeData) => void;
-  findNode: (nodeId: string) => NodeData;
+  findNode: (nodeId: string | null) => NodeData | null;
   updateNodePosition: (
     nodeId: string,
     position: Position,
@@ -75,7 +75,8 @@ const store = (set, get) => ({
     );
   },
 
-  findNode: (nodeId: string) => {
+  findNode: (nodeId: string | null) => {
+    if (!nodeId) return null;
     return get().nodes.find((node: NodeData) => node.id === nodeId);
   },
 

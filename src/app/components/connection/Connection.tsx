@@ -4,18 +4,17 @@ import { useMouse } from "@uidotdev/usehooks";
 import {
   getPath,
   getSocketPosition,
-  getTransfromedPosition,
+  getTransformedPosition,
 } from "@/app/components/connection/utils";
 import { ConnectionData } from "@/app/components/node/utils";
 
 export function Connection({
+  id,
   outputNodeId,
   outputSocketId,
   inputNodeId,
   inputSocketId,
 }: ConnectionData) {
-  const findNode = useStore((store) => store.findNode);
-
   const [mouse] = useMouse();
   const [outputPosition, setOutputPosition] = useState({
     x: mouse.x,
@@ -27,19 +26,21 @@ export function Connection({
   });
   const [path, setPath] = useState("");
 
-  const outputNode = useStore((store) => findNode(outputNodeId));
-  const inputNode = useStore((store) => findNode(inputNodeId));
   const editorScale = useStore((store) => store.editorScale);
+  const findNode = useStore((store) => store.findNode);
+
+  const inputNode = findNode(inputNodeId);
+  const outputNode = findNode(outputNodeId);
 
   const updatePositions = () => {
     let sourcePosition = outputSocketId
-      ? getSocketPosition(outputNodeId, outputSocketId, editorScale)
+      ? getSocketPosition(outputSocketId, editorScale)
       : null;
     let targetPosition = inputSocketId
-      ? getSocketPosition(inputNodeId, inputSocketId, editorScale)
+      ? getSocketPosition(inputSocketId, editorScale)
       : null;
 
-    const transformedPosition = getTransfromedPosition(
+    const transformedPosition = getTransformedPosition(
       { x: mouse.x, y: mouse.y },
       editorScale,
     );
@@ -79,9 +80,9 @@ export function Connection({
     outputSocketId,
     inputNodeId,
     inputSocketId,
-    outputNode,
-    inputNode,
     mouse,
+    inputNode,
+    outputNode,
   ]);
 
   useEffect(() => {
@@ -90,14 +91,12 @@ export function Connection({
   }, [outputPosition, inputPosition]);
 
   return (
-    <svg width="100%" height="100%" className="overflow-visible">
-      <path
-        d={path}
-        stroke="#489"
-        strokeWidth="3"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
+    <path
+      d={path}
+      stroke="#489"
+      strokeWidth="3"
+      fill="none"
+      strokeLinecap="round"
+    />
   );
 }
