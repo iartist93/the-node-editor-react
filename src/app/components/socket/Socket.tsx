@@ -19,6 +19,7 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
   const setActiveConnection = useStore((state) => state.setActiveConnection);
   const addNewConnection = useStore((state) => state.addNewConnection);
   const updateConnection = useStore((state) => state.updateConnection);
+  const removeConnection = useStore((state) => state.removeConnection);
 
   const socketRef = useRef(null);
   const activeConnection = useStore((state) => state.activeConnection);
@@ -41,7 +42,21 @@ export function Socket({ id, nodeId, type, datatype }: SocketData) {
 
     if (socketConnections.length > 0) {
       const connection = findConnection(socketConnections[0]);
-      updateConnection(connection.id, id, "disconnect");
+
+      if (activeConnection) {
+        if (type === "input") {
+          removeConnection(connection.id);
+          updateConnection(activeConnection.id, id, "connect");
+        } else {
+          updateConnection(activeConnection.id, id, "connect");
+        }
+      } else {
+        if (type === "input") {
+          updateConnection(connection.id, id, "disconnect");
+        } else {
+          addNewConnection(id);
+        }
+      }
     } else {
       if (activeConnection) {
         updateConnection(activeConnection.id, id, "connect");

@@ -201,8 +201,27 @@ const store = (set, get) => ({
   removeConnection: (connectionId: string) => {
     set(
       (state) => {
+        // get the connection
+        const connection = state.connections.find((c) => c.id === connectionId);
+
+        const inputSocket = state.sockets.find(
+          (socket) => socket.id === connection.inputSocketId,
+        );
+        const outputSocket = state.sockets.find(
+          (socket) => socket.id === connection.outputSocketId,
+        );
+
+        // remove the active connection from the socket.connections
+        inputSocket.connections = inputSocket.connections.filter(
+          (connectionId) => connectionId !== connection.id,
+        );
+
+        outputSocket.connections = outputSocket.connections.filter(
+          (connectionId) => connectionId !== connection.id,
+        );
+
         state.connections = state.connections.filter(
-          (connection) => connection.id !== connectionId,
+          (c) => c.id !== connectionId,
         );
       },
       false,
