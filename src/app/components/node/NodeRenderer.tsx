@@ -18,11 +18,6 @@ export function NodeRenderer({ node }: NodeRendererProps) {
   const updateNodePosition = useStore((store) => store.updateNodePosition);
   const editorScale = useStore((store) => store.editorScale);
 
-  const [tempPos, setTempPost] = useState({
-    x: node.position.x,
-    y: node.position.y,
-  });
-
   const getEventPosition = (event: MouseEvent): Position => {
     const x = event.x;
     const y = event.y;
@@ -83,7 +78,6 @@ export function NodeRenderer({ node }: NodeRendererProps) {
       </div>
       <div className="flex flex-col flex-1 ">
         <NodeComponent node={node} />
-        {/*<ExampleNode1 node={node} />*/}
       </div>
     </div>
   );

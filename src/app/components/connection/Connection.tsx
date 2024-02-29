@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useStore } from "@/app/store";
 import { useMouse } from "@uidotdev/usehooks";
 import {
+  isSamePosition,
   getPath,
   getSocketPosition,
   getTransformedPosition,
 } from "@/app/components/connection/utils";
-import { ConnectionData } from "@/app/components/node/utils";
+import { ConnectionData, Position } from "@/app/components/node/utils";
+import _ from "lodash";
 
 export function Connection({
   id,
@@ -16,11 +18,11 @@ export function Connection({
   inputSocketId,
 }: ConnectionData) {
   const [mouse] = useMouse();
-  const [outputPosition, setOutputPosition] = useState({
+  const [outputPosition, setOutputPosition] = useState<Position>({
     x: mouse.x,
     y: mouse.y,
   });
-  const [inputPosition, setInputPosition] = useState({
+  const [inputPosition, setInputPosition] = useState<Position>({
     x: mouse.x,
     y: mouse.y,
   });
@@ -32,11 +34,11 @@ export function Connection({
   const inputNode = findNode(inputNodeId);
   const outputNode = findNode(outputNodeId);
 
-  const updatePositions = () => {
-    let sourcePosition = outputSocketId
+  const updatePosition = () => {
+    let sourcePosition: Position | null = outputSocketId
       ? getSocketPosition(outputSocketId, editorScale)
       : null;
-    let targetPosition = inputSocketId
+    let targetPosition: Position | null = inputSocketId
       ? getSocketPosition(inputSocketId, editorScale)
       : null;
 
@@ -67,14 +69,25 @@ export function Connection({
       }
     }
 
-    if (sourcePosition && targetPosition) {
+    if (sourcePosition && !isSamePosition(outputPosition, sourcePosition)) {
       setOutputPosition(sourcePosition);
+    }
+
+    if (targetPosition && !isSamePosition(inputPosition, targetPosition)) {
       setInputPosition(targetPosition);
     }
   };
 
+  const updatePath = () => {
+    const p = getPath(outputPosition, inputPosition);
+    setPath(p);
+  };
+
+  const throttleUpdatePosition = _.throttle(updatePosition, 100);
+  const throttleUpdatePath = _.throttle(updatePath, 100);
+
   useEffect(() => {
-    updatePositions();
+    throttleUpdatePosition();
   }, [
     outputNodeId,
     outputSocketId,
@@ -86,8 +99,7 @@ export function Connection({
   ]);
 
   useEffect(() => {
-    const p = getPath(outputPosition, inputPosition);
-    setPath(p);
+    throttleUpdatePath();
   }, [outputPosition, inputPosition]);
 
   return (

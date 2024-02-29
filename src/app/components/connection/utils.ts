@@ -1,6 +1,11 @@
 import { useStore } from "@/app/store";
 import { type Position } from "@/app/components/node/utils";
 
+// function to compare 2 Positions and return true if they are equal
+export const isSamePosition = (a: Position, b: Position) => {
+  return a.x === b.x && a.y === b.y;
+};
+
 export const getPath = (
   source: {
     x: number;
@@ -25,7 +30,10 @@ export const getPath = (
   return `M${source.x} ${source.y} C${control1.x} ${control1.y}, ${control2.x} ${control2.y}, ${target.x} ${target.y}`;
 };
 
-export const getSocketPosition = (socketId: string, editorScale: number) => {
+export const getSocketPosition = (
+  socketId: string,
+  editorScale: number,
+): Position | null => {
   // get the editor DOMRect
   const canvas = document.getElementById("canvas");
   const canvasBBox = canvas?.getBoundingClientRect();
@@ -38,7 +46,7 @@ export const getSocketPosition = (socketId: string, editorScale: number) => {
       y: (bbox.y + bbox.height / 2 - canvasBBox.y) / editorScale,
     };
   }
-  return undefined;
+  return null;
 };
 
 export const getTransformedPosition = (
