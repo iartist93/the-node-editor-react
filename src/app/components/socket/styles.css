@@ -6,15 +6,16 @@
 
 
 input[type="color"] {
-  -webkit-appearance: none;
-  border: none;
-  background: transparent;
+    -webkit-appearance: none;
+    border: none;
+    background: transparent;
 }
+
 input[type="color"]::-webkit-color-swatch-wrapper,
 input[type="color"]::-webkit-color-swatch {
-  padding: 0;
-  border: 0;
-  border-radius: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
 }
 
 
@@ -28,13 +29,13 @@ input[type="color"]::-webkit-color-swatch {
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 
@@ -46,25 +47,21 @@ input[type=number] {
 
 
 .slider {
-  -webkit-appearance: none;
-  appearance: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
 }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  width: 1px;
-  height: 25px;
-  cursor: pointer;
-}
-
+.slider::-webkit-slider-thumb,
 .slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #04aa6d; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    background: transparent;
+    width: 0;
+    height: 0;
+    border: 0;
+    cursor: pointer;
 }
 
 

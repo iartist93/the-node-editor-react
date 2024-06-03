@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Socket } from "@/app/components/socket/Socket";
 import cc from "classcat";
 
@@ -43,7 +43,7 @@ export function RowColorSocket({
         />
         <p className="text-white text-sm absolute right-2 top-1">{color}</p>
       </div>
-      <Socket id={id} nodeId={nodeId} type={"output"} datatype={"color"} />
+      <Socket id={id} nodeId={nodeId} type={"input"} datatype={"color"} />
     </div>
   );
 }
