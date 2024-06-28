@@ -1,7 +1,7 @@
 ## V1
 
-- [ ] Feat: Highlight selected node
-- [ ] Fix: The connection goes to (0, 0) when first created.
+- [x] Feat: Highlight selected node
+- [ ] Fix: The connection goes to (0, 0) when first created, but after moving the canvas.
 - [ ] Feat Connection of socket execute the socket function to connect input to output.
 - [ ] Feat: Remove connection won't reset the socket value to default, but instead keep it as is.
 - [ ] Feat: Can only connect sockets of the same type.

@@ -4,7 +4,6 @@
 
 /******************************************************************/
 
-
 input[type="color"] {
     -webkit-appearance: none;
     border: none;
@@ -18,13 +17,11 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 10px;
 }
 
-
 /******************************************************************/
 
 /* Number Input Styles */
 
 /******************************************************************/
-
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -37,7 +34,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
-
 
 /******************************************************************/
 

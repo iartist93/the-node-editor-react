@@ -18,6 +18,12 @@ export function Connection({
                                inputSocketId,
                            }: ConnectionData) {
     const [mouse] = useMouse();
+
+    useEffect(() => {
+        console.log("Connection re-render > mouse ", mouse)
+    });
+
+
     const [outputPosition, setOutputPosition] = useState<Position>({
         x: mouse.x,
         y: mouse.y,
@@ -34,7 +40,8 @@ export function Connection({
     const inputNode = findNode(inputNodeId);
     const outputNode = findNode(outputNodeId);
 
-    const updatePosition = () => {
+    const updatePositions = () => {
+        // if the connection is connected to a socket, get the position of the socket.
         let sourcePosition: Position | null = outputSocketId
             ? getSocketPosition(outputSocketId, editorScale)
             : null;
@@ -47,10 +54,12 @@ export function Connection({
             editorScale,
         );
 
+        console.log("transformedPosition ", transformedPosition, mouse)
+
         if (!targetPosition) {
             if (
-                transformedPosition.x === 0 &&
-                transformedPosition.y === 0 &&
+                mouse.x === 0 &&
+                mouse.y === 0 &&
                 sourcePosition
             ) {
                 targetPosition = {x: sourcePosition.x, y: sourcePosition.y};
@@ -59,8 +68,8 @@ export function Connection({
             }
         } else if (!sourcePosition) {
             if (
-                transformedPosition.x === 0 &&
-                transformedPosition.y === 0 &&
+                mouse.x === 0 &&
+                mouse.y === 0 &&
                 targetPosition
             ) {
                 sourcePosition = {x: targetPosition.x, y: targetPosition.y};
@@ -79,16 +88,17 @@ export function Connection({
     };
 
     const updatePath = () => {
-        console.log("updatePath > output ", outputPosition)
-        console.log("updatePath > input ", inputPosition)
+        console.log("updatePath() > output ", outputPosition)
+        console.log("updatePath() > input ", inputPosition)
         const p = getPath(outputPosition, inputPosition);
         setPath(p);
     };
 
-    const throttleUpdatePosition = _.throttle(updatePosition, 100);
+    const throttleUpdatePosition = _.throttle(updatePositions, 100);
     const throttleUpdatePath = _.throttle(updatePath, 100);
 
     useEffect(() => {
+        console.log("mouse changed ... ", mouse)
         throttleUpdatePosition();
     }, [
         outputNodeId,
@@ -104,11 +114,15 @@ export function Connection({
         throttleUpdatePath();
     }, [outputPosition, inputPosition]);
 
+    useEffect(() => {
+        console.log("path changed ", path)
+    }, [path]);
+
     return (
         <path
             d={path}
-            stroke="#489"
-            strokeWidth="3"
+            stroke="#2F3645"
+            strokeWidth="2"
             fill="none"
             strokeLinecap="round"
         />

@@ -65,7 +65,8 @@ export function NodeRenderer({node}: NodeRendererProps) {
     return (
         <div
             ref={nodeRef}
-            className="no-pan node-renderer opacity-90 bg-white border-2 border-stone-200 rounded-2xl select-none w-64 flex flex-col shadow-lg"
+            tabIndex={0}
+            className="no-pan node-renderer opacity-90 bg-white border-2 border-stone-200 rounded-2xl select-none w-64 flex flex-col shadow-lg focus:border-green-500 focus:shadow-xl"
             style={{
                 position: "absolute",
                 left: node.position.x,
