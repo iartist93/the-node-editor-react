@@ -19,11 +19,6 @@ export function Connection({
                            }: ConnectionData) {
     const [mouse] = useMouse();
 
-    useEffect(() => {
-        console.log("Connection re-render > mouse ", mouse)
-    });
-
-
     const [outputPosition, setOutputPosition] = useState<Position>({
         x: mouse.x,
         y: mouse.y,
@@ -54,7 +49,6 @@ export function Connection({
             editorScale,
         );
 
-        console.log("transformedPosition ", transformedPosition, mouse)
 
         if (!targetPosition) {
             if (
@@ -88,8 +82,6 @@ export function Connection({
     };
 
     const updatePath = () => {
-        console.log("updatePath() > output ", outputPosition)
-        console.log("updatePath() > input ", inputPosition)
         const p = getPath(outputPosition, inputPosition);
         setPath(p);
     };
@@ -98,7 +90,6 @@ export function Connection({
     const throttleUpdatePath = _.throttle(updatePath, 100);
 
     useEffect(() => {
-        console.log("mouse changed ... ", mouse)
         throttleUpdatePosition();
     }, [
         outputNodeId,
@@ -114,10 +105,7 @@ export function Connection({
         throttleUpdatePath();
     }, [outputPosition, inputPosition]);
 
-    useEffect(() => {
-        console.log("path changed ", path)
-    }, [path]);
-
+    
     return (
         <path
             d={path}

@@ -22,7 +22,6 @@ export default function Home() {
             <Editor>
                 <ConnectionWrapper/>
                 <NodeWrapper/>
-
             </Editor>
             <Viewport></Viewport>
 

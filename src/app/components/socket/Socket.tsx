@@ -1,98 +1,107 @@
 import {
-  ConnectionData,
-  socketColors,
-  SocketData,
+    ConnectionData,
+    socketColors,
+    SocketData,
 } from "@/app/components/node/utils";
 import cc from "classcat";
-import { useEffect, useRef } from "react";
-import { useStore } from "@/app/store";
-import { nanoid } from "nanoid";
-import { node } from "prop-types";
-import { act } from "react-dom/test-utils";
+import {useEffect, useRef} from "react";
+import {useStore} from "@/app/store";
+import {nanoid} from "nanoid";
+import {node} from "prop-types";
+import {act} from "react-dom/test-utils";
 
-export function Socket({ id, nodeId, type, datatype }: SocketData) {
-  const size = 15;
+export function Socket({id, nodeId, type, datatype, onConnectionsChange}: SocketData) {
 
-  const addSocket = useStore((state) => state.addSocket);
-  const findSocket = useStore((state) => state.findSocket);
-  const findConnection = useStore((state) => state.findConnection);
-  const setActiveConnection = useStore((state) => state.setActiveConnection);
-  const addNewConnection = useStore((state) => state.addNewConnection);
-  const updateConnection = useStore((state) => state.updateConnection);
-  const removeConnection = useStore((state) => state.removeConnection);
+    const size = 15;
 
-  const socketRef = useRef(null);
-  const activeConnection = useStore((state) => state.activeConnection);
+    const addSocket = useStore((state) => state.addSocket);
+    const findSocket = useStore((state) => state.findSocket);
+    const findConnection = useStore((state) => state.findConnection);
+    const setActiveConnection = useStore((state) => state.setActiveConnection);
+    const addNewConnection = useStore((state) => state.addNewConnection);
+    const updateConnection = useStore((state) => state.updateConnection);
+    const removeConnection = useStore((state) => state.removeConnection);
 
-  const socketConnections = useStore(
-    (store) => findSocket(id)?.connections || [],
-  );
+    const socketRef = useRef(null);
+    const activeConnection = useStore((state) => state.activeConnection);
 
-  const handleSocketClick = (event: any) => {
-    event.stopPropagation();
+    const socketConnections = useStore(
+        (store) => findSocket(id)?.connections || [],
+    );
 
-    // rule: don't connect to the self
-    if (
-      activeConnection &&
-      ((type === "output" && activeConnection.outputSocketId === id) ||
-        (type === "input" && activeConnection.inputSocketId === id))
-    ) {
-      return;
-    }
+    const handleSocketClick = (event: any) => {
+        event.stopPropagation();
 
-    if (socketConnections.length > 0) {
-      const connection = findConnection(socketConnections[0]);
-
-      if (activeConnection) {
-        if (type === "input") {
-          removeConnection(connection.id);
-          updateConnection(activeConnection.id, id, "connect");
-        } else {
-          updateConnection(activeConnection.id, id, "connect");
+        // rule: don't connect to the self
+        if (
+            activeConnection &&
+            ((type === "output" && activeConnection.outputSocketId === id) ||
+                (type === "input" && activeConnection.inputSocketId === id))
+        ) {
+            return;
         }
-      } else {
-        if (type === "input") {
-          updateConnection(connection.id, id, "disconnect");
+
+        if (socketConnections.length > 0) {
+            const connection = findConnection(socketConnections[0]);
+
+            if (activeConnection) {
+                if (type === "input") {
+                    removeConnection(connection.id);
+                    updateConnection(activeConnection.id, id, "connect");
+                } else {
+                    updateConnection(activeConnection.id, id, "connect");
+                }
+            } else {
+                if (type === "input") {
+                    updateConnection(connection.id, id, "disconnect");
+                } else {
+                    addNewConnection(id);
+                }
+            }
         } else {
-          addNewConnection(id);
+            if (activeConnection) {
+                updateConnection(activeConnection.id, id, "connect");
+            } else {
+                addNewConnection(id);
+            }
         }
-      }
-    } else {
-      if (activeConnection) {
-        updateConnection(activeConnection.id, id, "connect");
-      } else {
-        addNewConnection(id);
-      }
-    }
-  };
+    };
 
-  useEffect(() => {
-    addSocket({ id, nodeId, type, datatype, connections: [] });
-  }, []);
+    useEffect(() => {
+        if (onConnectionsChange) {
+            onConnectionsChange(socketConnections)
+        }
+    }, [onConnectionsChange, socketConnections]);
 
-  return (
-    <svg
-      ref={socketRef}
-      id={id}
-      width={size}
-      height={size}
-      className={cc([
-        "no-drag",
-        "absolute top-1/2",
-        {
-          "right-0 -translate-y-1/2 translate-x-1/2": type === "output",
-          "left-0 -translate-y-1/2 -translate-x-1/2": type === "input",
-        },
-      ])}
-      onClick={handleSocketClick}
-    >
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={size / 2 - 2}
-        fill={socketColors[datatype]}
-        className="no-drag stroke-1 stroke-slate-400 hover:stroke-amber-500 hover:stroke-2"
-      />
-    </svg>
-  );
+
+    useEffect(() => {
+        addSocket({id, nodeId, type, datatype, connections: []});
+    }, []);
+
+
+    return (
+        <svg
+            ref={socketRef}
+            id={id}
+            width={size}
+            height={size}
+            className={cc([
+                "no-drag",
+                "absolute top-1/2",
+                {
+                    "right-0 -translate-y-1/2 translate-x-1/2": type === "output",
+                    "left-0 -translate-y-1/2 -translate-x-1/2": type === "input",
+                },
+            ])}
+            onClick={handleSocketClick}
+        >
+            <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={size / 2 - 2}
+                fill={socketColors[datatype]}
+                className="no-drag stroke-1 stroke-slate-400 hover:stroke-amber-500 hover:stroke-2"
+            />
+        </svg>
+    );
 }

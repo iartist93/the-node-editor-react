@@ -22,43 +22,43 @@ type NodeProps = {
 };
 */
 
-import { NodeData } from "@/app/components/node/utils";
+import {NodeData} from "@/app/components/node/utils";
 
 export const nodes: NodeData[] = [
-  {
-    id: "1",
-    type: "custom1",
-    data: {
-      name: "Color",
-      color: "#13ab17",
+    {
+        id: "1",
+        type: "custom1",
+        data: {
+            name: "Color",
+            color: "#13ab17",
+        },
+        position: {
+            x: 100,
+            y: 100,
+        },
     },
-    position: {
-      x: 100,
-      y: 100,
+    {
+        id: "3",
+        type: "custom1",
+        data: {
+            name: "Color",
+            color: "#520ccb",
+        },
+        position: {
+            x: 300,
+            y: 600,
+        },
     },
-  },
-  {
-    id: "3",
-    type: "custom1",
-    data: {
-      name: "Color",
-      color: "#520ccb",
+    {
+        id: "2",
+        type: "shader",
+        data: {
+            name: "PinncipleShader 1",
+            value: 20,
+        },
+        position: {
+            x: 600,
+            y: 100,
+        },
     },
-    position: {
-      x: 300,
-      y: 600,
-    },
-  },
-  {
-    id: "2",
-    type: "shader",
-    data: {
-      name: "PinncipleShader 1",
-      value: 10,
-    },
-    position: {
-      x: 600,
-      y: 100,
-    },
-  },
 ];

@@ -28,6 +28,10 @@ export function RowColorSocket({
         }
     };
 
+    const onConnectionsChange = (connections: string[]) => {
+        console.log("connections changes for ", name, connections);
+    }
+
     return (
         <div className="no-drag flex justify-between items-center relative px-4 my-2 h-6">
             <div className="select-none pointer-events-none text-xs text-black font-bold">
@@ -43,7 +47,12 @@ export function RowColorSocket({
                 />
                 <p className="text-white text-xs absolute right-2 top-1">{color}</p>
             </div>
-            <Socket id={id} nodeId={nodeId} type={"input"} datatype={"color"}/>
+            <Socket
+                id={id}
+                nodeId={nodeId}
+                type={"input"}
+                datatype={"color"}
+                onConnectionsChange={onConnectionsChange}/>
         </div>
     );
 }
