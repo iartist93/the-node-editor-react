@@ -1,13 +1,13 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
-import { devtools } from "zustand/middleware";
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
+import { devtools } from 'zustand/middleware';
 import {
   ConnectionData,
   NodeData,
   Position,
   SocketData,
-} from "@/app/components/node/utils";
-import { nanoid } from "nanoid";
+} from '@/app/components/node/utils';
+import { nanoid } from 'nanoid';
 
 interface State {
   nodes: NodeData[];
@@ -63,7 +63,7 @@ const store = (set, get) => ({
     set({ editorScale: scale });
   },
 
-  setNodes: (nodes: NodeData[]) => set({ nodes }, false, "setNodes"),
+  setNodes: (nodes: NodeData[]) => set({ nodes }, false, 'setNodes'),
 
   addNode: (node: NodeData) => {
     set(
@@ -71,7 +71,7 @@ const store = (set, get) => ({
         state.nodes.push(node);
       },
       false,
-      "addNode",
+      'addNode',
     );
   },
 
@@ -94,12 +94,12 @@ const store = (set, get) => ({
         }
       },
       false,
-      "updateNodePosition",
+      'updateNodePosition',
     );
   },
 
   setConnections: (connections: ConnectionData) =>
-    set({ connections }, false, "setConnections"),
+    set({ connections }, false, 'setConnections'),
 
   updateConnection: (
     connectionId: string,
@@ -112,8 +112,8 @@ const store = (set, get) => ({
         const socket = state.sockets.find((s) => s.id === socketId);
 
         switch (action) {
-          case "disconnect":
-            if (socket.type === "output") {
+          case 'disconnect':
+            if (socket.type === 'output') {
               connection.outputSocketId = null;
               connection.outputNodeId = null;
             } else {
@@ -124,8 +124,8 @@ const store = (set, get) => ({
               (c) => c.id === connectionId,
             );
             break;
-          case "connect":
-            if (socket.type === "output") {
+          case 'connect':
+            if (socket.type === 'output') {
               connection.outputNodeId = socket.nodeId;
               connection.outputSocketId = socket.id;
             } else {
@@ -145,7 +145,7 @@ const store = (set, get) => ({
         }
       },
       false,
-      "updateConnection",
+      'updateConnection',
     );
   },
 
@@ -155,7 +155,7 @@ const store = (set, get) => ({
         state.connections.push(connection);
       },
       false,
-      "addConnection",
+      'addConnection',
     );
   },
 
@@ -166,20 +166,20 @@ const store = (set, get) => ({
 
         const connection = {
           id: nanoid(),
-          outputNodeId: socket.type === "output" ? socket.nodeId : null,
-          outputSocketId: socket.type === "output" ? socket.id : null,
-          inputNodeId: socket.type === "input" ? socket.nodeId : null,
-          inputSocketId: socket.type === "input" ? socket.id : null,
+          outputNodeId: socket.type === 'output' ? socket.nodeId : null,
+          outputSocketId: socket.type === 'output' ? socket.id : null,
+          inputNodeId: socket.type === 'input' ? socket.nodeId : null,
+          inputSocketId: socket.type === 'input' ? socket.id : null,
         };
 
         state.activeConnection = connection;
         state.connections.push(connection);
       },
       false,
-      "addNewConnection",
+      'addNewConnection',
     );
 
-    get().updateConnection(get().activeConnection.id, socketId, "connect");
+    get().updateConnection(get().activeConnection.id, socketId, 'connect');
   },
 
   setActiveConnection: (connection: ConnectionData) => {
@@ -188,14 +188,24 @@ const store = (set, get) => ({
         state.activeConnection = connection;
       },
       false,
-      "setActiveConnection",
+      'setActiveConnection',
     );
   },
 
   findConnection: (connectionId: string) => {
-    return get().connections.find(
-      (connection) => connection.id === connectionId,
+    const connection = get().connections.find((c) => c.id === connectionId);
+    const inputSocket = get().sockets.find(
+      (socket) => socket.id === connection.inputSocketId,
     );
+    const outputSocket = get().sockets.find(
+      (socket) => socket.id === connection.outputSocketId,
+    );
+
+    return {
+      ...connection,
+      inputSocket,
+      outputSocket,
+    };
   },
 
   removeConnection: (connectionId: string) => {
@@ -225,7 +235,7 @@ const store = (set, get) => ({
         );
       },
       false,
-      "removeConnection",
+      'removeConnection',
     );
   },
 
@@ -262,7 +272,7 @@ const store = (set, get) => ({
         }
       },
       false,
-      "removeActiveConnection",
+      'removeActiveConnection',
     );
   },
 
@@ -272,11 +282,11 @@ const store = (set, get) => ({
         state.sockets.push(socket);
       },
       false,
-      "addSocket",
+      'addSocket',
     );
   },
 
-  setSockets: (sockets: SocketData[]) => set({ sockets }, false, "setSockets"),
+  setSockets: (sockets: SocketData[]) => set({ sockets }, false, 'setSockets'),
 
   findSocket: (socketId: string) => {
     return get().sockets.find((socket) => socket.id === socketId);

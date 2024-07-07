@@ -1,3 +1,6 @@
+- [ ] alot of types is missing and set to any, maybe has to losen it a bit at this point?!
+- [ ] Socket need a connections props which I still don't have data for it to pass, set it to [] for now.
+
 ## V1
 
 - [x] Feat: Highlight selected node
@@ -11,22 +14,22 @@
 ## V2
 
 - [ ] Feat: Build a custom color picker component, as the default one is not standard across all browsers.
-    - [ ] Can save colors to a palette.
-    - [ ] Can pick color from the browser.
-    - [ ] Can switch HSL/RGB/HEXA
+  - [ ] Can save colors to a palette.
+  - [ ] Can pick color from the browser.
+  - [ ] Can switch HSL/RGB/HEXA
 
 ## V3
 
 - [ ] Feat: Implement more fundamental ThreeJS nodes.
-    - [ ] Vector2 Node
-    - [ ] Vector3 Node
-    - Example Math of 2 or more numbers
+  - [ ] Vector2 Node
+  - [ ] Vector3 Node
+  - Example Math of 2 or more numbers
 
 ## V4
 
 - [ ] Feat: Implement topological sort to execute the graph.
-    - Recreate this example (https://app.nodetoy.co/file/9844f954-16f7-443f-bbf8-a90b59d863bf) using the graph.
-    - What nodes in this projects?
+  - Recreate this example (https://app.nodetoy.co/file/9844f954-16f7-443f-bbf8-a90b59d863bf) using the graph.
+  - What nodes in this projects?
 
 ## V5
 
@@ -37,9 +40,9 @@
 ## V6
 
 - [ ] Feat: Try to get a list of all the API functions that ThreeJS provides.
-    - [ ] get the input and output of each function.
-    - [ ] get the type of each input and output.
-    - [ ] get the description of each function.
+  - [ ] get the input and output of each function.
+  - [ ] get the type of each input and output.
+  - [ ] get the description of each function.
 - [ ] Feat: Implement a search bar to search for nodes.
 
 ## V7
@@ -54,4 +57,4 @@
 
 - [ ] Feat: can preview each node output so far (like substance designer)
 
-----------------
+---
