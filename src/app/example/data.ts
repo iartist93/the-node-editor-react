@@ -28,22 +28,40 @@ export const nodes: NodeData[] = [
   {
     id: '1',
     type: 'custom1',
-    data: {
-      name: 'Color',
-      color: '#13ab17',
+    inputs: {
+      color: {
+        name: 'Color',
+        value: '#13ab17',
+      },
     },
+    outputs: {
+      result: {
+        name: 'result',
+        value: '#13ab17',
+      },
+    },
+    data: {},
     position: {
       x: 100,
       y: 100,
     },
   },
   {
-    id: '3',
+    id: '1',
     type: 'custom1',
-    data: {
-      name: 'Color',
-      color: '#520ccb',
+    inputs: {
+      color: {
+        name: 'Color',
+        value: '#520ccb',
+      },
     },
+    outputs: {
+      result: {
+        name: 'result',
+        value: '#520ccb',
+      },
+    },
+    data: {},
     position: {
       x: 300,
       y: 600,
@@ -52,10 +70,9 @@ export const nodes: NodeData[] = [
   {
     id: '2',
     type: 'shader',
-    data: {
-      name: 'PinncipleShader 1',
-      value: 20,
-    },
+    inputs: {},
+    outputs: {},
+    data: {},
     position: {
       x: 600,
       y: 100,
@@ -64,50 +81,48 @@ export const nodes: NodeData[] = [
   {
     id: '4',
     type: 'add',
-    data: {
-      inputs: {
-        x: {
-          name: 'x',
-          value: 1,
-        },
-        y: {
-          name: 'y',
-          value: 2,
-        },
+    inputs: {
+      x: {
+        name: 'x',
+        value: 1,
       },
-      outputs: {
-        result: {
-          name: 'result',
-          value: 3,
-        },
+      y: {
+        name: 'y',
+        value: 2,
+      },
+    },
+    outputs: {
+      result: {
+        name: 'result',
+        value: 3,
       },
     },
     position: {
       x: 500,
       y: 800,
     },
+    data: {},
   },
   {
     id: '5',
     type: 'add',
-    data: {
-      inputs: {
-        x: {
-          name: 'x',
-          value: 1,
-        },
-        y: {
-          name: 'y',
-          value: 2,
-        },
+    inputs: {
+      x: {
+        name: 'x',
+        value: 1,
       },
-      outputs: {
-        result: {
-          name: 'result',
-          value: 3,
-        },
+      y: {
+        name: 'y',
+        value: 2,
       },
     },
+    outputs: {
+      result: {
+        name: 'result',
+        value: 3,
+      },
+    },
+    data: {},
     position: {
       x: 700,
       y: 400,

@@ -1,21 +1,21 @@
-import {useEffect, useState} from "react";
-import {useStore} from "@/app/store";
-import {useMouse} from "@uidotdev/usehooks";
+import {useEffect, useState} from 'react';
+import {useStore} from '@/app/store';
+import {useMouse} from '@uidotdev/usehooks';
 import {
     isSamePosition,
     getPath,
     getSocketPosition,
     getTransformedPosition,
-} from "@/app/components/connection/utils";
-import {ConnectionData, Position} from "@/app/components/node/utils";
-import _ from "lodash";
+} from '@/app/components/connection/utils';
+import {ConnectionData, Position} from '@/app/components/node/utils';
+import _ from 'lodash';
 
 export function Connection({
                                id,
                                outputNodeId,
-                               outputSocketId,
+                               outputSlotId,
                                inputNodeId,
-                               inputSocketId,
+                               inputSlotId,
                            }: ConnectionData) {
     const [mouse] = useMouse();
 
@@ -27,7 +27,7 @@ export function Connection({
         x: mouse.x,
         y: mouse.y,
     });
-    const [path, setPath] = useState("");
+    const [path, setPath] = useState('');
 
     const editorScale = useStore((store) => store.editorScale);
     const findNode = useStore((store) => store.findNode);
@@ -37,11 +37,11 @@ export function Connection({
 
     const updatePositions = () => {
         // if the connection is connected to a socket, get the position of the socket.
-        let sourcePosition: Position | null = outputSocketId
-            ? getSocketPosition(outputSocketId, editorScale)
+        let sourcePosition: Position | null = outputSlotId
+            ? getSocketPosition(outputSlotId, editorScale)
             : null;
-        let targetPosition: Position | null = inputSocketId
-            ? getSocketPosition(inputSocketId, editorScale)
+        let targetPosition: Position | null = inputSlotId
+            ? getSocketPosition(inputSlotId, editorScale)
             : null;
 
         const transformedPosition = getTransformedPosition(
@@ -49,23 +49,14 @@ export function Connection({
             editorScale,
         );
 
-
         if (!targetPosition) {
-            if (
-                mouse.x === 0 &&
-                mouse.y === 0 &&
-                sourcePosition
-            ) {
+            if (mouse.x === 0 && mouse.y === 0 && sourcePosition) {
                 targetPosition = {x: sourcePosition.x, y: sourcePosition.y};
             } else {
                 targetPosition = {x: transformedPosition.x, y: transformedPosition.y};
             }
         } else if (!sourcePosition) {
-            if (
-                mouse.x === 0 &&
-                mouse.y === 0 &&
-                targetPosition
-            ) {
+            if (mouse.x === 0 && mouse.y === 0 && targetPosition) {
                 sourcePosition = {x: targetPosition.x, y: targetPosition.y};
             } else {
                 sourcePosition = {x: transformedPosition.x, y: transformedPosition.y};
@@ -93,9 +84,9 @@ export function Connection({
         throttleUpdatePosition();
     }, [
         outputNodeId,
-        outputSocketId,
+        outputSlotId,
         inputNodeId,
-        inputSocketId,
+        inputSlotId,
         mouse,
         inputNode,
         outputNode,
@@ -105,14 +96,13 @@ export function Connection({
         throttleUpdatePath();
     }, [outputPosition, inputPosition]);
 
-    
     return (
         <path
             d={path}
-            stroke="#2F3645"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
+            stroke='#2F3645'
+            strokeWidth='2'
+            fill='none'
+            strokeLinecap='round'
         />
     );
 }

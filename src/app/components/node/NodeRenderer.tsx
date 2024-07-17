@@ -1,6 +1,6 @@
 import '@/app/components/socket/styles.css';
 import {
-  NodeRendererProps,
+  NodeData,
   nodeTypes,
   type Position,
 } from '@/app/components/node/utils';
@@ -9,6 +9,10 @@ import { select } from 'd3-selection';
 import { drag } from 'd3-drag';
 import { useStore } from '@/app/store';
 import { hasParentClass } from '@/app/utils';
+
+type NodeRendererProps = {
+  node: NodeData;
+};
 
 export function NodeRenderer({ node }: NodeRendererProps) {
   const NodeComponent = nodeTypes[node.type];
