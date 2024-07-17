@@ -14,7 +14,7 @@ export function OutputSlot({id, nodeId, value, name}: OutputSlotType) {
     const updateSocket = useStore((store) => store.updateSocket);
 
     const onConnectionsChange = (connections: ConnectionData[]) => {
-        console.log('connections changes for > OutputSocket ', name, connections);
+        // console.log('connections changes for > OutputSocket ', name, connections);
 
         for (let connection of connections) {
             if (connection.inputSlot && connection.outputSlot) {

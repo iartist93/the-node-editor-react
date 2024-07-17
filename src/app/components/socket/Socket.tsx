@@ -65,7 +65,7 @@ export function Socket({
     };
 
     useEffect(() => {
-        console.log('socketConnections changed', connections);
+        // console.log('socketConnections changed', connections);
         if (onConnectionsChange) {
             onConnectionsChange(connections);
         }

@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {Socket} from '@/app/components/socket/Socket';
 import cc from 'classcat';
 import {ConnectionData} from '../node/utils';
+import {useGraph} from "../../hooks/useGraph";
 
 type SliderSocketProps = {
     id: string;
@@ -25,15 +26,20 @@ export function SliderSocket({
                              }: SliderSocketProps) {
     const [tempValue, setTempValue] = useState(value);
 
+
+    const {onInputChange} = useGraph()
+
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTempValue(parseFloat(e.target.value));
         if (onChange) {
             onChange(name, parseFloat(e.target.value));
+
+            onInputChange(nodeId, name, parseFloat(e.target.value))
         }
     };
 
     const onConnectionsChange = (connections: ConnectionData[]) => {
-        console.log('connections changes for ', name, connections);
+        // console.log('connections changes for ', name, connections);
     };
 
     return (
