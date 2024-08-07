@@ -34,11 +34,11 @@ interface Actions {
     // ------------  connections
     setConnections: (connections: ConnectionData[]) => void;
     addConnection: (connection: ConnectionData) => void;
-    addNewConnection: (connectionId: string) => void;
+    addNewConnection: (socket: SocketData) => void;
     findConnection: (connectionId: string) => ConnectionData;
     updateConnection: (
         connectionId: string,
-        socketId: string,
+        socketData: SocketData,
         action: string,
     ) => void;
     removeConnection: (connectionId: string) => void;
@@ -104,13 +104,18 @@ const store = (set, get) => ({
 
     updateConnection: (
         connectionId: string,
-        socketId: string,
+        socketData: SocketData,
         action: string,
     ) => {
         set(
             (state) => {
+                const {nodeId, type, name} = socketData;
+                const socket = state.nodes.find(n => n.id === nodeId)[type + 's'][name];
+
                 const connection = state.connections.find((c) => c.id === connectionId);
-                const socket = state.sockets.find((s) => s.id === socketId);
+
+                console.log("==========> connectionId ", connectionId)
+
 
                 switch (action) {
                     case 'disconnect':
@@ -160,10 +165,11 @@ const store = (set, get) => ({
         );
     },
 
-    addNewConnection: (socketId: string) => {
+    addNewConnection: (socketData: SocketData) => {
         set(
             (state) => {
-                const socket = state.sockets.find((s) => s.id === socketId);
+                const {nodeId, type, name} = socketData;
+                const socket = state.nodes.find(n => n.id === nodeId)[type + 's'][name];
 
                 const connection = {
                     id: nanoid(),
@@ -180,7 +186,7 @@ const store = (set, get) => ({
             'addNewConnection',
         );
 
-        get().updateConnection(get().activeConnection.id, socketId, 'connect');
+        get().updateConnection(get().activeConnection.id, socketData, 'connect');
     },
 
     setActiveConnection: (connection: ConnectionData) => {

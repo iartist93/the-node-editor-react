@@ -17,12 +17,10 @@ export const useGraph = () => {
         }
     }
 
-
     const onInputChange = (nodeId: string, socketName: string, value: any) => {
         updateSocket(nodeId, "inputs", socketName, value);
         runGraph(nodeId)
     }
-
-
+    
     return {onInputChange, runGraph}
 }

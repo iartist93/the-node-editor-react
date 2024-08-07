@@ -7,17 +7,11 @@ import cc from 'classcat';
 import {useEffect, useRef} from 'react';
 import {useStore} from '@/app/store';
 
-export function Socket({
-                           id,
-                           nodeId,
-                           type,
-                           datatype,
-                           onConnectionsChange,
-                           value,
-                           name,
-                           connections,
-                       }: SocketData) {
+export function Socket(socket: SocketData) {
+
+    const {id, nodeId, name, type, datatype, connections, onConnectionsChange} = socket;
     const size = 15;
+
 
     const activeConnection = useStore((state) => state.activeConnection);
     const addNewConnection = useStore((state) => state.addNewConnection);
@@ -52,14 +46,16 @@ export function Socket({
                 if (type === 'input') {
                     updateConnection(connection.id, id, 'disconnect');
                 } else {
-                    addNewConnection(id);
+                    console.log('addNewConnection: ', id);
+                    addNewConnection(socket);
                 }
             }
         } else {
             if (activeConnection) {
                 updateConnection(activeConnection.id, id, 'connect');
             } else {
-                addNewConnection(id);
+                console.log('addNewConnection: ', id);
+                addNewConnection(socket);
             }
         }
     };

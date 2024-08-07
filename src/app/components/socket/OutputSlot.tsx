@@ -35,7 +35,7 @@ export function OutputSlot({id, nodeId, value, name}: OutputSlotType) {
                 id={id}
                 type={'output'}
                 datatype={'number'}
-                name='output'
+                name={name}
                 nodeId={nodeId}
                 value={value}
                 connections={[]}
