@@ -20,7 +20,7 @@ export default function Home() {
                 socket.id = node.id + "-" + key;
                 socket.nodeId = node.id;
                 socket.type = "input";
-                socket.connection = [];
+                socket.connections = [];
             }
 
             for (let key in node.outputs) {
@@ -28,7 +28,7 @@ export default function Home() {
                 socket.id = node.id + "-" + key;
                 socket.nodeId = node.id;
                 socket.type = "output";
-                socket.connection = [];
+                socket.connections = [];
             }
 
             return node;

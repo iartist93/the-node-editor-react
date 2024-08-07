@@ -110,11 +110,13 @@ const store = (set, get) => ({
         set(
             (state) => {
                 const {nodeId, type, name} = socketData;
+                console.log("socket data : ", connectionId, JSON.stringify(socketData, null, 2))
+
                 const socket = state.nodes.find(n => n.id === nodeId)[type + 's'][name];
 
                 const connection = state.connections.find((c) => c.id === connectionId);
 
-                console.log("==========> connectionId ", connectionId)
+                console.log("==========> socket connections ", JSON.stringify(socket, null, 2))
 
 
                 switch (action) {

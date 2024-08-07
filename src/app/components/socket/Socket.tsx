@@ -7,9 +7,9 @@ import cc from 'classcat';
 import {useEffect, useRef} from 'react';
 import {useStore} from '@/app/store';
 
-export function Socket(socket: SocketData) {
+export function Socket(socketData: SocketData) {
 
-    const {id, nodeId, name, type, datatype, connections, onConnectionsChange} = socket;
+    const {id, nodeId, name, type, datatype, connections, onConnectionsChange} = socketData;
     const size = 15;
 
 
@@ -38,24 +38,22 @@ export function Socket(socket: SocketData) {
             if (activeConnection) {
                 if (type === 'input') {
                     removeConnection(connection.id);
-                    updateConnection(activeConnection.id, id, 'connect');
+                    updateConnection(activeConnection.id, socketData, 'connect');
                 } else {
-                    updateConnection(activeConnection.id, id, 'connect');
+                    updateConnection(activeConnection.id, socketData, 'connect');
                 }
             } else {
                 if (type === 'input') {
-                    updateConnection(connection.id, id, 'disconnect');
+                    updateConnection(connection.id, socketData, 'disconnect');
                 } else {
-                    console.log('addNewConnection: ', id);
-                    addNewConnection(socket);
+                    addNewConnection(socketData);
                 }
             }
         } else {
             if (activeConnection) {
-                updateConnection(activeConnection.id, id, 'connect');
+                updateConnection(activeConnection.id, socketData, 'connect');
             } else {
-                console.log('addNewConnection: ', id);
-                addNewConnection(socket);
+                addNewConnection(socketData);
             }
         }
     };
