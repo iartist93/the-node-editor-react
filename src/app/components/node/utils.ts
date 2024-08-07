@@ -49,9 +49,10 @@ export type SocketData = {
 export type ConnectionData = {
     id: string;
     outputNodeId: string | null;
-    outputSlotId: string | null;
+    outputSocketId: string | null;
     inputNodeId: string | null;
-    inputSlotId: string | null;
+    inputSocketId: string | null;
+
     inputSlot: SocketData | null;
     outputSlot: SocketData | null;
 };

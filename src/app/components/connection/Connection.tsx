@@ -13,9 +13,9 @@ import _ from 'lodash';
 export function Connection({
                                id,
                                outputNodeId,
-                               outputSlotId,
+                               outputSocketId,
                                inputNodeId,
-                               inputSlotId,
+                               inputSocketId,
                            }: ConnectionData) {
     const [mouse] = useMouse();
 
@@ -37,11 +37,11 @@ export function Connection({
 
     const updatePositions = () => {
         // if the connection is connected to a socket, get the position of the socket.
-        let sourcePosition: Position | null = outputSlotId
-            ? getSocketPosition(outputSlotId, editorScale)
+        let sourcePosition: Position | null = outputSocketId
+            ? getSocketPosition(outputSocketId, editorScale)
             : null;
-        let targetPosition: Position | null = inputSlotId
-            ? getSocketPosition(inputSlotId, editorScale)
+        let targetPosition: Position | null = inputSocketId
+            ? getSocketPosition(inputSocketId, editorScale)
             : null;
 
         const transformedPosition = getTransformedPosition(
@@ -84,9 +84,9 @@ export function Connection({
         throttleUpdatePosition();
     }, [
         outputNodeId,
-        outputSlotId,
+        outputSocketId,
         inputNodeId,
-        inputSlotId,
+        inputSocketId,
         mouse,
         inputNode,
         outputNode,

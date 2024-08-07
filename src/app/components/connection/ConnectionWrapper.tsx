@@ -12,9 +12,9 @@ export function ConnectionWrapper() {
                         key={connection.id}
                         id={connection.id}
                         outputNodeId={connection.outputNodeId}
-                        outputSlotId={connection.outputSocketId}
+                        outputSocketId={connection.outputSocketId}
                         inputNodeId={connection.inputNodeId}
-                        inputSlotId={connection.inputSocketId}
+                        inputSocketId={connection.inputSocketId}
                     />
                 ))}
             </svg>

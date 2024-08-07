@@ -26,8 +26,8 @@ export function Socket(socketData: SocketData) {
         // rule: don't connect to the self
         if (
             activeConnection &&
-            ((type === 'output' && activeConnection.outputSlotId === id) ||
-                (type === 'input' && activeConnection.inputSlotId === id))
+            ((type === 'output' && activeConnection.outputSocketId === id) ||
+                (type === 'input' && activeConnection.inputSocketId === id))
         ) {
             return;
         }

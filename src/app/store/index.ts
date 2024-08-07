@@ -110,14 +110,8 @@ const store = (set, get) => ({
         set(
             (state) => {
                 const {nodeId, type, name} = socketData;
-                console.log("socket data : ", connectionId, JSON.stringify(socketData, null, 2))
-
                 const socket = state.nodes.find(n => n.id === nodeId)[type + 's'][name];
-
                 const connection = state.connections.find((c) => c.id === connectionId);
-
-                console.log("==========> socket connections ", JSON.stringify(socket, null, 2))
-
 
                 switch (action) {
                     case 'disconnect':
@@ -176,9 +170,11 @@ const store = (set, get) => ({
                 const connection = {
                     id: nanoid(),
                     outputNodeId: socket.type === 'output' ? socket.nodeId : null,
+                    outputSocketName: socket.type === 'output' ? socket.name : null,
                     outputSocketId: socket.type === 'output' ? socket.id : null,
                     inputNodeId: socket.type === 'input' ? socket.nodeId : null,
                     inputSocketId: socket.type === 'input' ? socket.id : null,
+                    inputSocketName: socket.type === 'input' ? socket.name : null,
                 };
 
                 state.activeConnection = connection;
