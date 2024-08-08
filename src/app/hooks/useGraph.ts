@@ -1,5 +1,6 @@
 import {useStore} from "@/app/store";
 import nodeFunctions from "@/app/components/node/nodeFunctions"
+import {SocketData} from "../components/node/utils";
 
 export const useGraph = () => {
 
@@ -23,10 +24,20 @@ export const useGraph = () => {
      * when input socket value change -- update the socket value and run the graph
      * which will update the output socket value
      */
-    const onInputChange = (nodeId: string, socketName: string, value: any) => {
-        updateSocket(nodeId, "inputs", socketName, value);
-        runGraph(nodeId)
+    const onInputChange = (socketData: SocketData, newValue: any) => {
+        updateSocket(socketData.nodeId, "inputs", socketData.name, newValue);
+        runGraph(socketData.nodeId)
     }
+
+
+    const onOutputChange = (socketData: SocketData, newValue: any) => {
+        updateSocket(socketData.nodeId, "outputs", socketData.name, newValue);
+
+        if (socketData.connections.length > 0) {
+            onConnectionsChange(socketData.connections)
+        }
+    }
+
 
     const onConnectionsChange = (socketConnections: string[]) => {
         for (let connectionId of socketConnections) {
@@ -43,5 +54,5 @@ export const useGraph = () => {
     }
 
 
-    return {onInputChange, onConnectionsChange, runGraph}
+    return {onInputChange, onOutputChange, onConnectionsChange, runGraph}
 }

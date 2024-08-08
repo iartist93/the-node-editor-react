@@ -40,10 +40,9 @@ export type SocketData = {
     nodeId: string;
     type: string;
     datatype: string;
-    connections: ConnectionData[];
+    connections: string[];
     value: any;
     name: string;
-    onConnectionsChange?: (connections: ConnectionData[]) => void;
 };
 
 export type ConnectionData = {

@@ -10,7 +10,7 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
     const {onInputChange} = useGraph()
 
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onInputChange(nodeId, name, parseFloat(e.target.value))
+        onInputChange(socketData, parseFloat(e.target.value))
     };
 
     return (

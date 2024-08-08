@@ -1,30 +1,17 @@
-import {useStore} from '@/app/store';
-import {ConnectionData} from '../node/utils';
 import './styles.css';
 import {Socket} from '@/app/components/socket/Socket';
 import {useEffect} from "react";
+import {useGraph} from "../../hooks/useGraph";
 
-type OutputSlotType = {
-    id: string;
-    nodeId: string;
-    value: number;
-    name: string;
-
-};
-
+// TODO: Need to fix the Prop type here
 export function OutputSlot({socketData}) {
     const {id, nodeId, value, name, connections} = socketData;
-    const updateSocket = useStore((store) => store.updateSocket);
 
-    const onConnectionsChange = (connections: ConnectionData[]) => {
-        for (let connection of connections) {
-            if (connection.inputSlot && connection.outputSlot) {
-                connection.inputSlot.value = connection.outputSlot.value;
-                updateSocket(connection.inputSlot.id, connection.inputSlot.value);
-            }
-        }
-    };
+    const {onOutputChange} = useGraph()
 
+    useEffect(() => {
+        onOutputChange(socketData, value);
+    }, [value]);
 
     return (
         <div className='no-drag flex flex-col relative px-4 my-6'>
@@ -41,7 +28,6 @@ export function OutputSlot({socketData}) {
                 nodeId={nodeId}
                 value={value}
                 connections={connections}
-                onConnectionsChange={onConnectionsChange}
             />
         </div>
     );

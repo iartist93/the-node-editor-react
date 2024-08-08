@@ -22,7 +22,7 @@ export function RowColorSocket({socketData}) {
     const color = useMemo(() => convertColorToHex(value), [value])
 
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onInputChange(nodeId, name, new Color(e.target.value))
+        onInputChange(socketData, new Color(e.target.value))
     };
 
     return (

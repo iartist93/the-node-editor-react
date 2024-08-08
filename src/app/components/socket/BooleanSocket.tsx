@@ -8,7 +8,7 @@ export function BooleanSocket({socketData}) {
     const {onInputChange} = useGraph()
 
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onInputChange(nodeId, name, parseFloat(e.target.value))
+        onInputChange(socketData, parseFloat(e.target.value))
     };
 
     return (
