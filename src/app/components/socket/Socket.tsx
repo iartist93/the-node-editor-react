@@ -17,7 +17,6 @@ export function Socket(socketData: SocketData) {
     const removeConnection = useStore((state) => state.removeConnection);
 
     const socketRef = useRef(null);
-
     const {onConnectionsChange} = useGraph()
 
     const handleSocketClick = (event: any) => {
@@ -59,9 +58,9 @@ export function Socket(socketData: SocketData) {
     };
 
     useEffect(() => {
-        // console.log("useEffect > connections", connections)
         onConnectionsChange(connections);
     }, [connections]);
+
 
     return (
         <svg

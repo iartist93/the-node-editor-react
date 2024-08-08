@@ -118,9 +118,11 @@ const store = (set, get) => ({
                         if (socket.type === 'output') {
                             connection.outputSocketId = null;
                             connection.outputNodeId = null;
+                            connection.outputSocketName = null;
                         } else {
                             connection.inputNodeId = null;
                             connection.inputSocketId = null;
+                            connection.inputSocketName = null;
                         }
                         socket.connections = socket.connections.filter(
                             (c) => c.id === connectionId,
@@ -130,9 +132,11 @@ const store = (set, get) => ({
                         if (socket.type === 'output') {
                             connection.outputNodeId = socket.nodeId;
                             connection.outputSocketId = socket.id;
+                            connection.ouputSocketName = socket.name;
                         } else {
                             connection.inputNodeId = socket.nodeId;
                             connection.inputSocketId = socket.id;
+                            connection.inputSocketName = socket.name;
                         }
                         socket.connections.push(connectionId);
                         break;
@@ -300,7 +304,6 @@ const store = (set, get) => ({
     },
 
     updateSocket: (nodeId: string, type: 'input' | 'output', socketName: string, value: any) => {
-        // console.log('updateSocket', nodeId, type, socketName, value);
         set(
             (state) => {
                 const node = state.nodes.find(n => n.id === nodeId);

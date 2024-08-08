@@ -5,6 +5,8 @@ export const useGraph = () => {
 
     const updateSocket = useStore(store => store.updateSocket)
     const findNode = useStore(store => store.findNode)
+    const connections = useStore(store => store.connections)
+    const nodes = useStore(store => store.nodes)
 
     const runGraph = (nodeId: string) => {
         const node = findNode(nodeId);
@@ -26,16 +28,14 @@ export const useGraph = () => {
         runGraph(nodeId)
     }
 
-    const onConnectionsChange = (connections: string[]) => {
+    const onConnectionsChange = (socketConnections: string[]) => {
+        for (let connectionId of socketConnections) {
+            const connection = connections.find(connection => connection.id === connectionId)
 
-        console.log("connections", connections)
+            if (!connection.inputNodeId || !connection.outputNodeId) return;
 
-        for (let connectionId of connections) {
-            const connection = useStore.getState().connections[connectionId];
-            const outputSocket = useStore.getState().nodes[connection.outputNodeId].outputs[connection.outputSocketName];
-
-            console.log("outputSocket", outputSocket)
-            console.log("connection", connection)
+            const outputNode = nodes.find(node => node.id === connection.outputNodeId)
+            const outputSocket = outputNode.outputs[connection.outputSocketName]
 
             updateSocket(connection.inputNodeId, "inputs", connection.inputSocketName, outputSocket.value)
             runGraph(connection.inputNodeId)

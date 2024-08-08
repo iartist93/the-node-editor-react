@@ -2,6 +2,7 @@ import {useStore} from '@/app/store';
 import {ConnectionData} from '../node/utils';
 import './styles.css';
 import {Socket} from '@/app/components/socket/Socket';
+import {useEffect} from "react";
 
 type OutputSlotType = {
     id: string;
@@ -11,7 +12,8 @@ type OutputSlotType = {
 
 };
 
-export function OutputSlot({id, nodeId, value, name}: OutputSlotType) {
+export function OutputSlot({socketData}) {
+    const {id, nodeId, value, name, connections} = socketData;
     const updateSocket = useStore((store) => store.updateSocket);
 
     const onConnectionsChange = (connections: ConnectionData[]) => {
@@ -22,6 +24,7 @@ export function OutputSlot({id, nodeId, value, name}: OutputSlotType) {
             }
         }
     };
+
 
     return (
         <div className='no-drag flex flex-col relative px-4 my-6'>
@@ -37,7 +40,7 @@ export function OutputSlot({id, nodeId, value, name}: OutputSlotType) {
                 name={name}
                 nodeId={nodeId}
                 value={value}
-                connections={[]}
+                connections={connections}
                 onConnectionsChange={onConnectionsChange}
             />
         </div>

@@ -8,7 +8,6 @@ import {nodes} from '@/app/example/data';
 import Editor from '@/app/components/Editor/Editor';
 import Viewport from '@/app/components/Viewport/Viewport';
 
-
 export default function Home() {
     const setNodes = useStore((store) => store.setNodes);
     const state = useStore((store) => store);
@@ -39,7 +38,6 @@ export default function Home() {
     useEffect(() => {
         buildSocketData();
         setNodes(nodes);
-        console.log("=========> nodes after build ", nodes)
     }, []);
 
     return (

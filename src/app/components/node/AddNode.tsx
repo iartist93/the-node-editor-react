@@ -2,15 +2,14 @@ import '@/app/components/socket/styles.css';
 import {IOData, NodeComponentProps} from '@/app/components/node/utils';
 import {SliderSocket} from '@/app/components/socket/SliderSocket';
 import {OutputSlot} from '../socket/OutputSlot';
+import {useEffect} from "react";
 
 export function AddNode({node}: NodeComponentProps) {
+
     return (
         <div className='flex flex-col relative py-3'>
             <OutputSlot
-                id={node.id + '-' + node.outputs.result.name}
-                nodeId={node.id}
-                value={node.outputs.result.value}
-                name={node.outputs.result.name}
+                socketData={node.outputs.result}
             />
             <SliderSocket
                 socketData={node.inputs.x}

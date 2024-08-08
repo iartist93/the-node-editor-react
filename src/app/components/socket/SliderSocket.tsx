@@ -1,5 +1,4 @@
 import './styles.css';
-import {useState} from 'react';
 import {Socket} from '@/app/components/socket/Socket';
 import cc from 'classcat';
 import {useGraph} from "../../hooks/useGraph";
@@ -8,12 +7,9 @@ import {useGraph} from "../../hooks/useGraph";
 //TODO: Need to fix the Prop type here
 export function SliderSocket({min = 0, max = 1, socketData}) {
     const {id, nodeId, name, value, connections} = socketData;
-    const [tempValue, setTempValue] = useState(socketData.value);
-
     const {onInputChange} = useGraph()
 
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTempValue(parseFloat(e.target.value));
         onInputChange(nodeId, name, parseFloat(e.target.value))
     };
 
@@ -25,7 +21,7 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
                     min={min}
                     max={max}
                     step={0.01}
-                    value={tempValue}
+                    value={value}
                     onChange={handleSliderChange}
                     className='slider w-full h-full bg-stone-300 outline-0 opacity-70 hover:opacity-100 '
                 />
@@ -33,7 +29,7 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
                 <div
                     className='absolute top-0 left-0 bg-blue-600 pointer-events-none select-none h-full'
                     style={{
-                        width: `${((tempValue - min) / (max - min)) * 100}%`,
+                        width: `${((value - min) / (max - min)) * 100}%`,
                     }}
                 ></div>
 
@@ -41,8 +37,8 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
                     className={cc([
                         'select-none pointer-events-none absolute left-2 top-[50%] -translate-y-[50%]  text-xs font-light',
                         {
-                            'text-purple-200': tempValue > min + (max - min) * 0.2,
-                            'text-purple-950': tempValue <= min + (max - min) * 0.2,
+                            'text-purple-200': value > min + (max - min) * 0.2,
+                            'text-purple-950': value <= min + (max - min) * 0.2,
                         },
                     ])}
                 >
@@ -53,12 +49,12 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
                     className={cc([
                         'select-none pointer-events-none absolute right-2 top-[50%] -translate-y-[50%] text-xs font-bold',
                         {
-                            'text-purple-200': tempValue > min + (max - min) * 0.94,
-                            'text-purple-950': tempValue <= min + (max - min) * 0.94,
+                            'text-purple-200': value > min + (max - min) * 0.94,
+                            'text-purple-950': value <= min + (max - min) * 0.94,
                         },
                     ])}
                 >
-                    {tempValue}
+                    {value}
                 </p>
             </div>
             <Socket
@@ -67,8 +63,8 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
                 type={'input'}
                 datatype={'number'}
                 name={name}
-                value={tempValue}
-                connections={[]}
+                value={value}
+                connections={connections}
             />
         </div>
     );

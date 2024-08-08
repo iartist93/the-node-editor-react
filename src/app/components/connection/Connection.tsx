@@ -96,6 +96,7 @@ export function Connection({
         throttleUpdatePath();
     }, [outputPosition, inputPosition]);
 
+
     return (
         <path
             d={path}

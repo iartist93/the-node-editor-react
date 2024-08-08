@@ -2,8 +2,14 @@ import '@/app/components/socket/styles.css';
 import {SliderSocket} from '@/app/components/socket/SliderSocket';
 import {RowColorSocket} from '@/app/components/socket/RowColorSocket';
 import {BooleanSocket} from '@/app/components/socket/BooleanSocket';
+import {useEffect} from "react";
 
 export function PrincipleShader({node}: NodeComponentProps) {
+
+    useEffect(() => {
+    }, [node]);
+
+
     // TODO: We don't need to define each socket manually --- we can check the node.inputs and outputs to construct the UI
     return (
         <div className='flex flex-col relative py-3'>

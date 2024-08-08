@@ -1,6 +1,11 @@
-const add = (inputs) => ({
-    result: (inputs.x.value + inputs.y.value).toFixed(2)
-});
+const add = (inputs) => {
+    const result = parseFloat(inputs.x.value + inputs.y.value).toFixed(2)
+    return {
+        result: parseFloat(result)
+    }
+}
 
-const nodeFunctions = {add,};
+const shader = (inputs) => ({});
+
+const nodeFunctions = {add, shader};
 export default nodeFunctions;
