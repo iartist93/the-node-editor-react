@@ -1,17 +1,15 @@
 import {
-    ConnectionData,
     socketColors,
     SocketData,
 } from '@/app/components/node/utils';
 import cc from 'classcat';
 import {useEffect, useRef} from 'react';
 import {useStore} from '@/app/store';
+import {useGraph} from "../../hooks/useGraph";
 
 export function Socket(socketData: SocketData) {
-
-    const {id, nodeId, name, type, datatype, connections, onConnectionsChange} = socketData;
+    const {id, nodeId, name, type, datatype, connections} = socketData;
     const size = 15;
-
 
     const activeConnection = useStore((state) => state.activeConnection);
     const addNewConnection = useStore((state) => state.addNewConnection);
@@ -19,6 +17,8 @@ export function Socket(socketData: SocketData) {
     const removeConnection = useStore((state) => state.removeConnection);
 
     const socketRef = useRef(null);
+
+    const {onConnectionsChange} = useGraph()
 
     const handleSocketClick = (event: any) => {
         event.stopPropagation();
@@ -59,10 +59,8 @@ export function Socket(socketData: SocketData) {
     };
 
     useEffect(() => {
-        // console.log('socketConnections changed', connections);
-        if (onConnectionsChange) {
-            onConnectionsChange(connections);
-        }
+        // console.log("useEffect > connections", connections)
+        onConnectionsChange(connections);
     }, [connections]);
 
     return (

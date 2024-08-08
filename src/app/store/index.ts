@@ -300,6 +300,7 @@ const store = (set, get) => ({
     },
 
     updateSocket: (nodeId: string, type: 'input' | 'output', socketName: string, value: any) => {
+        // console.log('updateSocket', nodeId, type, socketName, value);
         set(
             (state) => {
                 const node = state.nodes.find(n => n.id === nodeId);

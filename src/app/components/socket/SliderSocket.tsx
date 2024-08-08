@@ -2,44 +2,19 @@ import './styles.css';
 import {useState} from 'react';
 import {Socket} from '@/app/components/socket/Socket';
 import cc from 'classcat';
-import {ConnectionData} from '../node/utils';
 import {useGraph} from "../../hooks/useGraph";
 
-type SliderSocketProps = {
-    id: string;
-    nodeId: string;
-    value: number;
-    name: string;
-    min?: number;
-    max?: number;
-    onChange?: (name: string, value: number) => void;
-};
 
-export function SliderSocket({
-                                 id,
-                                 nodeId,
-                                 value,
-                                 name,
-                                 min = 0,
-                                 max = 1,
-                                 onChange,
-                             }: SliderSocketProps) {
-    const [tempValue, setTempValue] = useState(value);
-
+//TODO: Need to fix the Prop type here
+export function SliderSocket({min = 0, max = 1, socketData}) {
+    const {id, nodeId, name, value, connections} = socketData;
+    const [tempValue, setTempValue] = useState(socketData.value);
 
     const {onInputChange} = useGraph()
 
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTempValue(parseFloat(e.target.value));
-        if (onChange) {
-            onChange(name, parseFloat(e.target.value));
-
-            onInputChange(nodeId, name, parseFloat(e.target.value))
-        }
-    };
-
-    const onConnectionsChange = (connections: ConnectionData[]) => {
-        // console.log('connections changes for ', name, connections);
+        onInputChange(nodeId, name, parseFloat(e.target.value))
     };
 
     return (
@@ -94,7 +69,6 @@ export function SliderSocket({
                 name={name}
                 value={tempValue}
                 connections={[]}
-                onConnectionsChange={onConnectionsChange}
             />
         </div>
     );

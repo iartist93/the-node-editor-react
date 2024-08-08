@@ -1,30 +1,18 @@
 import "./styles.css";
 import {useState} from "react";
 import {Socket} from "@/app/components/socket/Socket";
-import cc from "classcat";
+import {useGraph} from "../../hooks/useGraph";
 
-type BooleanSocketProps = {
-    id: string;
-    nodeId: string;
-    value: boolean;
-    name: string;
-    onChange?: (value: boolean) => void;
-};
 
-export function BooleanSocket({
-                                  id,
-                                  nodeId,
-                                  value,
-                                  name,
-                                  onChange,
-                              }: BooleanSocketProps) {
+export function BooleanSocket({socketData}) {
+    const {id, nodeId, value, name, connections} = socketData
     const [socketValue, setSocketValue] = useState(value);
+
+    const {onInputChange} = useGraph()
 
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSocketValue(e.target.checked);
-        if (onChange) {
-            onChange(e.target.checked);
-        }
+        onInputChange(nodeId, name, parseFloat(e.target.value))
     };
 
     return (
@@ -39,7 +27,13 @@ export function BooleanSocket({
                 onChange={handleColorChange}
                 className="w-4 h-4"
             />
-            <Socket id={id} nodeId={nodeId} type={"output"} datatype={"color"} value={socketValue}/>
+            <Socket
+                id={id}
+                nodeId={nodeId}
+                type={"output"}
+                datatype={"color"}
+                value={socketValue}
+                connections={connections}/>
         </div>
     );
 }

@@ -39,6 +39,7 @@ export default function Home() {
     useEffect(() => {
         buildSocketData();
         setNodes(nodes);
+        console.log("=========> nodes after build ", nodes)
     }, []);
 
     return (

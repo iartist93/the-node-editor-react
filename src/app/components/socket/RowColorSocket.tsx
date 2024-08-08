@@ -1,35 +1,33 @@
 import './styles.css';
 import React, {useState} from 'react';
 import {Socket} from '@/app/components/socket/Socket';
-import {ConnectionData} from '@/app/components/node/utils';
+import {useGraph} from "../../hooks/useGraph";
+import {Color} from "three";
 
-type ColorSocketProps = {
-    id: string;
-    nodeId: string;
-    value: string;
-    name: string;
-    variant: string;
-    onChange?: (value: string) => void;
-};
 
-export function RowColorSocket({
-                                   id,
-                                   nodeId,
-                                   value,
-                                   name,
-                                   onChange,
-                               }: ColorSocketProps) {
-    const [color, setColor] = useState(value);
+//TODO: Need to fix the Prop type here
+export function RowColorSocket({socketData}) {
+    const {id, nodeId, value, name, connections} = socketData
 
-    const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setColor(e.target.value);
-        if (onChange) {
-            onChange(e.target.value);
+    console.log("color = ", value, typeof value)
+
+    const convertColorToHex = (color: Color) => {
+        if (typeof color === 'string') return color
+        else if (typeof color === 'object' && color instanceof Color) {
+            return '#' + color.getHexString();
+        } else {
+            return '#000000'
         }
-    };
+    }
 
-    const onConnectionsChange = (connections: ConnectionData[]) => {
-        // console.log('connections changes for ', name, connections);
+    const [color, setColor] = useState(convertColorToHex(value))
+
+    const {onInputChange} = useGraph()
+    
+    const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("color changed ", e.target.value)
+        setColor(e.target.value);
+        onInputChange(nodeId, name, new Color(e.target.value))
     };
 
     return (
@@ -54,8 +52,7 @@ export function RowColorSocket({
                 datatype={'color'}
                 value={color}
                 name={name}
-                connections={[]}
-                onConnectionsChange={onConnectionsChange}
+                connections={connections}
             />
         </div>
     );
