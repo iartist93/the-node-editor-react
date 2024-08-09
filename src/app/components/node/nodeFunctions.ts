@@ -7,5 +7,12 @@ const add = (inputs) => {
 
 const shader = (inputs) => ({});
 
-const nodeFunctions = {add, shader};
+const color = (inputs) => {
+    return {
+        color: inputs.color.value,
+        roughness: inputs.roughness.value
+    }
+}
+
+const nodeFunctions = {add, shader, color};
 export default nodeFunctions;

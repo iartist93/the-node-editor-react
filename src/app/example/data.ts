@@ -28,25 +28,30 @@ import {Color} from "three";
 export const nodes: NodeData[] = [
     {
         id: '1',
-        type: 'custom1',
+        type: 'color',
         inputs: {
             color: {
-                name: 'Color',
+                name: 'color',
                 value: '#13ab17',
                 dataType: 'color',
             },
             roughness: {
-                name: 'Roughness',
+                name: 'roughness',
                 value: 0.3,
                 dataType: 'number',
             }
         },
         outputs: {
-            result: {
-                name: 'result',
+            color: {
+                name: 'color',
                 value: '#13ab17',
                 dataType: 'color',
             },
+            roughness: {
+                name: 'roughness',
+                value: 0.3,
+                dataType: 'number',
+            }
         },
         data: {},
         position: {
@@ -56,25 +61,30 @@ export const nodes: NodeData[] = [
     },
     {
         id: '2',
-        type: 'custom1',
+        type: 'color',
         inputs: {
             color: {
-                name: 'Color',
+                name: 'color',
                 value: '#520ccb',
                 dataType: 'color',
             },
             roughness: {
-                name: 'Roughness',
+                name: 'roughness',
                 value: 0.3,
                 dataType: 'number',
             }
         },
         outputs: {
-            result: {
-                name: 'result',
+            color: {
+                name: 'color',
                 value: '#520ccb',
                 dataType: 'color',
             },
+            roughness: {
+                name: 'roughness',
+                value: 0.3,
+                dataType: 'number',
+            }
         },
         data: {},
         position: {
@@ -131,7 +141,7 @@ export const nodes: NodeData[] = [
                 value: 1,
                 dataType: 'number',
             },
-            
+
         },
         outputs: {},
         data: {},

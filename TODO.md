@@ -6,7 +6,7 @@
 - [x] Feat: Highlight selected node
 - [x] Fix: The connection goes to (0, 0) when first created, but after moving the canvas.
 - [x] Feat Connection of socket execute the socket function to connect input to output.
-- [ ] Feat: Remove connection won't reset the socket value to default, but instead keep it as is.
+- [x] Feat: Remove connection won't reset the socket value to default, but instead keep it as is.
 - [ ] Feat: Can only connect sockets of the same type.
 - [ ] Style: Color of the connections.
 - [ ] Feat: When socket is connected, we can't adjust its value, should only display the socket name.

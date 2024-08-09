@@ -1,4 +1,4 @@
-import {ExampleNode1} from '@/app/components/node/ExampleNode1';
+import {ColorNode} from '@/app/components/node/ColorNode';
 import React from 'react';
 import {PrincipleShader} from '@/app/components/node/PrincipleShader';
 import {AddNode} from '@/app/components/node/AddNode';
@@ -61,7 +61,7 @@ type SocketColors = {
 };
 
 export const nodeTypes: NodeTypes = {
-    custom1: ExampleNode1,
+    color: ColorNode,
     shader: PrincipleShader,
     add: AddNode,
 };
