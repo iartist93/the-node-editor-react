@@ -47,7 +47,6 @@ interface Actions {
 
     // ------------  sockets
     setSockets: (sockets: SocketData[]) => void;
-    addSocket: (socket: SocketData) => void;
     findSocket: (socketId: string) => SocketData;
     updateSocketConnections: (socketId: string, connectionId: string) => void;
     updateSocket: (nodeId: string, type: 'input' | 'output', socketName: string, value: any) => void;
@@ -279,16 +278,6 @@ const store = (set, get) => ({
             },
             false,
             'removeActiveConnection',
-        );
-    },
-
-    addSocket: (socket: SocketData) => {
-        set(
-            (state) => {
-                state.sockets.push(socket);
-            },
-            false,
-            'addSocket',
         );
     },
 
