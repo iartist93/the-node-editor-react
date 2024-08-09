@@ -9,6 +9,7 @@ import {
 } from '@/app/components/connection/utils';
 import {ConnectionData, Position} from '@/app/components/node/utils';
 import _ from 'lodash';
+import "./style.css"
 
 export function Connection({connectionData}: ConnectionData) {
     const [mouse] = useMouse();
@@ -91,7 +92,7 @@ export function Connection({connectionData}: ConnectionData) {
     return (
         <path
             d={path}
-            stroke='#2F3645'
+            stroke='#009903'
             strokeWidth='2'
             fill='none'
             strokeLinecap='round'
