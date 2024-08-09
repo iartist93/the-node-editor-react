@@ -23,7 +23,7 @@ export function OutputSlot({socketData}) {
             <Socket
                 id={id}
                 type={'output'}
-                datatype={'number'}
+                dataType={'number'}
                 name={name}
                 nodeId={nodeId}
                 value={value}

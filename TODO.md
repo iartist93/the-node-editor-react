@@ -1,5 +1,7 @@
 - [ ] alot of types is missing and set to any, maybe has to losen it a bit at this point?!
 - [ ] Socket need a connections props which I still don't have data for it to pass, set it to [] for now.
+- [ ] Connection between 2 sockets of different type will cast if possible (check the ouptut value type and the input
+  socket type and invoke the conversion function if possible) else remove the active connection.
 
 ## V1
 

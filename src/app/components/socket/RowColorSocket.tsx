@@ -44,7 +44,7 @@ export function RowColorSocket({socketData}) {
                 id={id}
                 nodeId={nodeId}
                 type={'input'}
-                datatype={'color'}
+                dataType={'color'}
                 value={color}
                 name={name}
                 connections={connections}

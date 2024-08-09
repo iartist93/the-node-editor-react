@@ -10,11 +10,7 @@ export function ConnectionWrapper() {
                 {connections.map((connection) => (
                     <Connection
                         key={connection.id}
-                        id={connection.id}
-                        outputNodeId={connection.outputNodeId}
-                        outputSocketId={connection.outputSocketId}
-                        inputNodeId={connection.inputNodeId}
-                        inputSocketId={connection.inputSocketId}
+                        connectionData={connection}
                     />
                 ))}
             </svg>

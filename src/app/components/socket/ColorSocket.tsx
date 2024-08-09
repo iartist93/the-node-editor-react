@@ -35,7 +35,7 @@ export function ColorSocket({socketData, height = 200}) {
                 id={id}
                 nodeId={nodeId}
                 type={'input'}
-                datatype={'color'}
+                dataType={'color'}
                 value={value}
                 connections={connections}
             />

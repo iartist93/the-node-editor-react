@@ -39,7 +39,7 @@ export type SocketData = {
     id: string;
     nodeId: string;
     type: string;
-    datatype: string;
+    dataType: string;
     connections: string[];
     value: any;
     name: string;
@@ -47,13 +47,8 @@ export type SocketData = {
 
 export type ConnectionData = {
     id: string;
-    outputNodeId: string | null;
-    outputSocketId: string | null;
-    inputNodeId: string | null;
-    inputSocketId: string | null;
-
-    inputSlot: SocketData | null;
-    outputSlot: SocketData | null;
+    inputSocket: SocketData | null;
+    outputSocket: SocketData | null;
 };
 
 type SocketColors = {

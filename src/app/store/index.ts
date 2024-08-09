@@ -33,7 +33,6 @@ interface Actions {
 
     // ------------  connections
     setConnections: (connections: ConnectionData[]) => void;
-    addConnection: (connection: ConnectionData) => void;
     addNewConnection: (socket: SocketData) => void;
     findConnection: (connectionId: string) => ConnectionData;
     updateConnection: (
@@ -62,6 +61,10 @@ const store = (set, get) => ({
     setEditorScale: (scale: number) => {
         set({editorScale: scale});
     },
+
+    //-------------------------------------------
+    // nodes
+    //-------------------------------------------
 
     setNodes: (nodes: NodeData[]) => set({nodes}, false, 'setNodes'),
 
@@ -98,6 +101,10 @@ const store = (set, get) => ({
         );
     },
 
+    //-------------------------------------------
+    // connections
+    //-------------------------------------------
+
     setConnections: (connections: ConnectionData) =>
         set({connections}, false, 'setConnections'),
 
@@ -115,13 +122,9 @@ const store = (set, get) => ({
                 switch (action) {
                     case 'disconnect':
                         if (socket.type === 'output') {
-                            connection.outputNodeId = null;
-                            connection.outputSocketId = null;
-                            connection.outputSocketName = null;
+                            connection.outputSocket = null;
                         } else {
-                            connection.inputNodeId = null;
-                            connection.inputSocketId = null;
-                            connection.inputSocketName = null;
+                            connection.inputSocket = null;
                         }
                         socket.connections = socket.connections.filter(
                             (c) => c.id === connectionId,
@@ -129,13 +132,9 @@ const store = (set, get) => ({
                         break;
                     case 'connect':
                         if (socket.type === 'output') {
-                            connection.outputNodeId = socket.nodeId;
-                            connection.outputSocketId = socket.id;
-                            connection.outputSocketName = socket.name;
+                            connection.outputSocket = socket;
                         } else {
-                            connection.inputNodeId = socket.nodeId;
-                            connection.inputSocketId = socket.id;
-                            connection.inputSocketName = socket.name;
+                            connection.inputSocket = socket;
                         }
                         socket.connections.push(connectionId);
                         break;
@@ -143,7 +142,9 @@ const store = (set, get) => ({
                         break;
                 }
 
-                if (connection.outputSocketId && connection.inputSocketId) {
+                console.log("connection", JSON.stringify(connection, null, 2))
+
+                if (connection.outputSocket && connection.inputSocket) {
                     state.activeConnection = null;
                 } else {
                     state.activeConnection = connection;
@@ -151,16 +152,6 @@ const store = (set, get) => ({
             },
             false,
             'updateConnection',
-        );
-    },
-
-    addConnection: (connection: ConnectionData) => {
-        set(
-            (state) => {
-                state.connections.push(connection);
-            },
-            false,
-            'addConnection',
         );
     },
 
@@ -172,12 +163,8 @@ const store = (set, get) => ({
 
                 const connection = {
                     id: nanoid(),
-                    outputNodeId: socket.type === 'output' ? socket.nodeId : null,
-                    outputSocketName: socket.type === 'output' ? socket.name : null,
-                    outputSocketId: socket.type === 'output' ? socket.id : null,
-                    inputNodeId: socket.type === 'input' ? socket.nodeId : null,
-                    inputSocketId: socket.type === 'input' ? socket.id : null,
-                    inputSocketName: socket.type === 'input' ? socket.name : null,
+                    outputSocket: socket.type === 'output' ? socket : null,
+                    inputSocket: socket.type === 'input' ? socket : null,
                 };
 
                 state.activeConnection = connection;
@@ -203,10 +190,10 @@ const store = (set, get) => ({
     findConnection: (connectionId: string): ConnectionData => {
         const connection = get().connections.find((c) => c.id === connectionId);
         const inputSocket = get().sockets.find(
-            (socket) => socket.id === connection.inputSocketId,
+            (socket) => socket.id === connection.inputSocket.id,
         );
         const outputSocket = get().sockets.find(
-            (socket) => socket.id === connection.outputSocketId,
+            (socket) => socket.id === connection.outputSocket.id,
         );
 
         return {
@@ -222,11 +209,11 @@ const store = (set, get) => ({
                 // get the connection
                 const connection = state.connections.find((c) => c.id === connectionId);
 
-                const inputNode = state.nodes.find(n => n.id === connection.inputNodeId);
-                const outputNode = state.nodes.find(n => n.id === connection.outputNodeId);
+                const inputNode = state.nodes.find(n => n.id === connection.inputSocket.nodeId);
+                const outputNode = state.nodes.find(n => n.id === connection.outputSocket.nodeId);
 
-                const inputSocket = inputNode.inputs[connection.inputSocketName];
-                const outputSocket = outputNode.outputs[connection.outputSocketName];
+                const inputSocket = inputNode.inputs[connection.inputSocket.name];
+                const outputSocket = outputNode.outputs[connection.outputSocket.name];
 
                 // remove the active connection from the socket.connections
                 inputSocket.connections = inputSocket.connections.filter(
@@ -251,19 +238,19 @@ const store = (set, get) => ({
             (state) => {
                 if (state.activeConnection) {
                     // get the input socket and output socket for the active connection
-                    const inputNode = state.nodes.find(n => n.id === state.activeConnection.inputNodeId);
-                    const outputNode = state.nodes.find(n => n.id === state.activeConnection.outputNodeId);
+                    const inputNode = state.nodes.find(n => n.id === state.activeConnection.inputsocket?.nodeId);
+                    const outputNode = state.nodes.find(n => n.id === state.activeConnection.outputSocket?.nodeId);
 
                     // remove the active connection from the socket.connections
                     if (inputNode) {
-                        const inputSocket = inputNode.inputs[state.activeConnection.inputSocketName];
+                        const inputSocket = inputNode.inputs[state.activeConnection.inputSocket.name];
                         inputSocket.connections = inputSocket.connections.filter(
                             (connectionId) => connectionId !== state.activeConnection.id,
                         );
                     }
 
                     if (outputNode) {
-                        const outputSocket = outputNode.outputs[state.activeConnection.outputSocketName];
+                        const outputSocket = outputNode.outputs[state.activeConnection.outputSocket.name];
                         outputSocket.connections = outputSocket.connections.filter(
                             (connectionId) => connectionId !== state.activeConnection.id,
                         );
@@ -280,6 +267,10 @@ const store = (set, get) => ({
             'removeActiveConnection',
         );
     },
+
+    //-------------------------------------------
+    // sockets
+    //-------------------------------------------
 
     findSocket: (
         nodeId: string,
@@ -299,6 +290,10 @@ const store = (set, get) => ({
             'updateSocket',
         );
     },
+
+    //-------------------------------------------
+
+
 });
 
 export const useStore = create<State & Actions>()(devtools(immer(store)));

@@ -61,7 +61,7 @@ export function SliderSocket({min = 0, max = 1, socketData}) {
                 id={id}
                 nodeId={nodeId}
                 type={'input'}
-                datatype={'number'}
+                dataType={'number'}
                 name={name}
                 value={value}
                 connections={connections}

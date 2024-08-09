@@ -10,13 +10,7 @@ import {
 import {ConnectionData, Position} from '@/app/components/node/utils';
 import _ from 'lodash';
 
-export function Connection({
-                               id,
-                               outputNodeId,
-                               outputSocketId,
-                               inputNodeId,
-                               inputSocketId,
-                           }: ConnectionData) {
+export function Connection({connectionData}: ConnectionData) {
     const [mouse] = useMouse();
 
     const [outputPosition, setOutputPosition] = useState<Position>({
@@ -32,16 +26,16 @@ export function Connection({
     const editorScale = useStore((store) => store.editorScale);
     const findNode = useStore((store) => store.findNode);
 
-    const inputNode = findNode(inputNodeId);
-    const outputNode = findNode(outputNodeId);
+    const inputNode = findNode(connectionData.inputSocket?.nodeId);
+    const outputNode = findNode(connectionData.outputSocket?.nodeId);
 
     const updatePositions = () => {
         // if the connection is connected to a socket, get the position of the socket.
-        let sourcePosition: Position | null = outputSocketId
-            ? getSocketPosition(outputSocketId, editorScale)
+        let sourcePosition: Position | null = connectionData.outputSocket?.id
+            ? getSocketPosition(connectionData.outputSocket.id, editorScale)
             : null;
-        let targetPosition: Position | null = inputSocketId
-            ? getSocketPosition(inputSocketId, editorScale)
+        let targetPosition: Position | null = connectionData.inputSocket?.id
+            ? getSocketPosition(connectionData.inputSocket.id, editorScale)
             : null;
 
         const transformedPosition = getTransformedPosition(
@@ -83,10 +77,7 @@ export function Connection({
     useEffect(() => {
         throttleUpdatePosition();
     }, [
-        outputNodeId,
-        outputSocketId,
-        inputNodeId,
-        inputSocketId,
+        connectionData,
         mouse,
         inputNode,
         outputNode,

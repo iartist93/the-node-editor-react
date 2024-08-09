@@ -8,14 +8,15 @@ import {useStore} from '@/app/store';
 import {useGraph} from "../../hooks/useGraph";
 
 export function Socket(socketData: SocketData) {
-    const {id, nodeId, name, type, datatype, connections} = socketData;
+    const {id, nodeId, name, type, dataType, connections} = socketData;
     const size = 15;
-    
+
     const allConnections = useStore((state) => state.connections);
     const activeConnection = useStore((state) => state.activeConnection);
     const addNewConnection = useStore((state) => state.addNewConnection);
     const updateConnection = useStore((state) => state.updateConnection);
     const removeConnection = useStore((state) => state.removeConnection);
+    const removeActiveConnection = useStore((state) => state.removeActiveConnection);
 
 
     const socketRef = useRef(null);
@@ -28,11 +29,14 @@ export function Socket(socketData: SocketData) {
     const checkIfValidConnection = (socketData: SocketData) => {
         if (activeConnection) {
             if (type === 'input') {
-                if (activeConnection.outputSocketId === id) {
+                if (activeConnection.outputSocket.id === id || activeConnection.outputSocket.dataType !== socketData.dataType) {
+                    console.log("note same ", activeConnection.outputSocket, activeConnection.outputSocket.dataType, socketData.dataType)
                     return false;
                 }
+
             } else {
-                if (activeConnection.inputSocketId === id) {
+                if (activeConnection.inputSocket.id === id || activeConnection.inputSocket.dataType !== socketData.dataType) {
+                    console.log("note same ", activeConnection.inputSocket, activeConnection.inputSocket.dataType, socketData.dataType)
                     return false;
                 }
             }
@@ -50,6 +54,10 @@ export function Socket(socketData: SocketData) {
         event.stopPropagation();
 
         if (!checkIfValidConnection(socketData)) {
+            console.log("====================> invalid connection ")
+            if (activeConnection) {
+                removeActiveConnection();
+            }
             return;
         }
 
@@ -105,7 +113,7 @@ export function Socket(socketData: SocketData) {
                 cx={size / 2}
                 cy={size / 2}
                 r={size / 2 - 2}
-                fill={socketColors[datatype]}
+                fill={socketColors[dataType]}
                 className='no-drag stroke-1 stroke-slate-400 hover:stroke-amber-500 hover:stroke-2'
             />
         </svg>

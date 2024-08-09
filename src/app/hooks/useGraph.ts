@@ -42,12 +42,12 @@ export const useGraph = () => {
     const onConnectionsChange = (socketConnections: string[]) => {
         for (let connectionId of socketConnections) {
             const connection = connections.find(connection => connection.id === connectionId)
-            if (!connection.inputNodeId || !connection.outputNodeId) return;
-            const outputNode = nodes.find(node => node.id === connection.outputNodeId)
-            const outputSocket = outputNode.outputs[connection.outputSocketName]
+            if (!connection.inputSocket || !connection.outputSocket) return;
+            const outputNode = nodes.find(node => node.id === connection.outputSocket.nodeId)
+            const outputSocket = outputNode.outputs[connection.outputSocket.name]
 
-            updateSocket(connection.inputNodeId, "inputs", connection.inputSocketName, outputSocket.value)
-            runGraph(connection.inputNodeId)
+            updateSocket(connection.inputSocket.nodeId, "inputs", connection.inputSocket.name, outputSocket.value)
+            runGraph(connection.inputSocket.nodeId)
         }
     }
 

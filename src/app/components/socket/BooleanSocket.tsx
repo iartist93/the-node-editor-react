@@ -26,7 +26,7 @@ export function BooleanSocket({socketData}) {
                 id={id}
                 nodeId={nodeId}
                 type={"output"}
-                datatype={"color"}
+                dataType={"color"}
                 value={value}
                 connections={connections}/>
         </div>
