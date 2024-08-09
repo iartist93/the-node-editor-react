@@ -1,5 +1,6 @@
 - [ ] alot of types is missing and set to any, maybe has to losen it a bit at this point?!
 - [ ] Socket need a connections props which I still don't have data for it to pass, set it to [] for now.
+- [ ] Drag from socket should create a connection.
 - [ ] Connection between 2 sockets of different type will cast if possible (check the ouptut value type and the input
   socket type and invoke the conversion function if possible) else remove the active connection.
 
@@ -10,8 +11,8 @@
 - [x] Feat Connection of socket execute the socket function to connect input to output.
 - [x] Feat: Remove connection won't reset the socket value to default, but instead keep it as is.
 - [x] Feat: Can only connect sockets of the same type.
-- [ ] Style: Color of the connections.
-- [ ] Feat: When socket is connected, we can't adjust its value, should only display the socket name.
+- [x] Style: Color of the connections.
+- [x] Feat: When socket is connected, we can't adjust its value, should only display the socket name.
 
 ## V2
 

@@ -142,8 +142,6 @@ const store = (set, get) => ({
                         break;
                 }
 
-                console.log("connection", JSON.stringify(connection, null, 2))
-
                 if (connection.outputSocket && connection.inputSocket) {
                     state.activeConnection = null;
                 } else {

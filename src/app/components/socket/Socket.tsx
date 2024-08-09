@@ -30,13 +30,11 @@ export function Socket(socketData: SocketData) {
         if (activeConnection) {
             if (type === 'input') {
                 if (activeConnection.outputSocket.id === id || activeConnection.outputSocket.dataType !== socketData.dataType) {
-                    console.log("note same ", activeConnection.outputSocket, activeConnection.outputSocket.dataType, socketData.dataType)
                     return false;
                 }
 
             } else {
                 if (activeConnection.inputSocket.id === id || activeConnection.inputSocket.dataType !== socketData.dataType) {
-                    console.log("note same ", activeConnection.inputSocket, activeConnection.inputSocket.dataType, socketData.dataType)
                     return false;
                 }
             }
@@ -54,7 +52,6 @@ export function Socket(socketData: SocketData) {
         event.stopPropagation();
 
         if (!checkIfValidConnection(socketData)) {
-            console.log("====================> invalid connection ")
             if (activeConnection) {
                 removeActiveConnection();
             }

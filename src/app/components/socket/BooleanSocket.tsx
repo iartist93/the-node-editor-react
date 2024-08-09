@@ -4,7 +4,7 @@ import {useGraph} from "../../hooks/useGraph";
 
 
 export function BooleanSocket({socketData}) {
-    const {id, nodeId, value, name, connections} = socketData
+    const {id, nodeId, value, name, dataType, connections} = socketData
     const {onInputChange} = useGraph()
 
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +25,8 @@ export function BooleanSocket({socketData}) {
             <Socket
                 id={id}
                 nodeId={nodeId}
-                type={"output"}
-                dataType={"color"}
+                type={"input"}
+                dataType={dataType}
                 value={value}
                 connections={connections}/>
         </div>

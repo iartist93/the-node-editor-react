@@ -66,7 +66,7 @@ export const socketColors: SocketColors = {
     // number: "#f39c12",
     // color: "#e74c3c",
     number: '#e1e1ec',
-    color: '#dfdfe8',
+    color: '#eea622',
     boolean: '#3498db',
     string: '#9b59b6',
     object: '#2ecc71',

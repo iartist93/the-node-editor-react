@@ -9,11 +9,11 @@ export function ConnectionWrapper() {
             <svg width="100%" height="100%" className="overflow-visible ">
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#05a"/>
-                        <stop offset="100%" stop-color="#0a5"/>
+                        <stop offset="0%" stopColor="#05a"/>
+                        <stop offset="100%" stopColor="#0a5"/>
                     </linearGradient>
                 </defs>
-                
+
                 {connections.map((connection) => (
                     <Connection
                         key={connection.id}
