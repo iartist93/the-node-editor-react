@@ -42,9 +42,7 @@ export const useGraph = () => {
     const onConnectionsChange = (socketConnections: string[]) => {
         for (let connectionId of socketConnections) {
             const connection = connections.find(connection => connection.id === connectionId)
-
             if (!connection.inputNodeId || !connection.outputNodeId) return;
-
             const outputNode = nodes.find(node => node.id === connection.outputNodeId)
             const outputSocket = outputNode.outputs[connection.outputSocketName]
 

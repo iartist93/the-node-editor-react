@@ -116,8 +116,8 @@ const store = (set, get) => ({
                 switch (action) {
                     case 'disconnect':
                         if (socket.type === 'output') {
-                            connection.outputSocketId = null;
                             connection.outputNodeId = null;
+                            connection.outputSocketId = null;
                             connection.outputSocketName = null;
                         } else {
                             connection.inputNodeId = null;
@@ -132,7 +132,7 @@ const store = (set, get) => ({
                         if (socket.type === 'output') {
                             connection.outputNodeId = socket.nodeId;
                             connection.outputSocketId = socket.id;
-                            connection.ouputSocketName = socket.name;
+                            connection.outputSocketName = socket.name;
                         } else {
                             connection.inputNodeId = socket.nodeId;
                             connection.inputSocketId = socket.id;
@@ -223,12 +223,11 @@ const store = (set, get) => ({
                 // get the connection
                 const connection = state.connections.find((c) => c.id === connectionId);
 
-                const inputSocket = state.sockets.find(
-                    (socket) => socket.id === connection.inputSocketId,
-                );
-                const outputSocket = state.sockets.find(
-                    (socket) => socket.id === connection.outputSocketId,
-                );
+                const inputNode = state.nodes.find(n => n.id === connection.inputNodeId);
+                const outputNode = state.nodes.find(n => n.id === connection.outputNodeId);
+
+                const inputSocket = inputNode.inputs[connection.inputSocketName];
+                const outputSocket = outputNode.outputs[connection.outputSocketName];
 
                 // remove the active connection from the socket.connections
                 inputSocket.connections = inputSocket.connections.filter(
@@ -248,26 +247,24 @@ const store = (set, get) => ({
         );
     },
 
-    removeActiveConnection: (connectionId: string) => {
+    removeActiveConnection: () => {
         set(
             (state) => {
                 if (state.activeConnection) {
                     // get the input socket and output socket for the active connection
-                    const inputSocket = state.sockets.find(
-                        (socket) => socket.id === state.activeConnection.inputSocketId,
-                    );
-                    const outputSocket = state.sockets.find(
-                        (socket) => socket.id === state.activeConnection.outputSocketId,
-                    );
+                    const inputNode = state.nodes.find(n => n.id === state.activeConnection.inputNodeId);
+                    const outputNode = state.nodes.find(n => n.id === state.activeConnection.outputNodeId);
 
                     // remove the active connection from the socket.connections
-                    if (inputSocket) {
+                    if (inputNode) {
+                        const inputSocket = inputNode.inputs[state.activeConnection.inputSocketName];
                         inputSocket.connections = inputSocket.connections.filter(
                             (connectionId) => connectionId !== state.activeConnection.id,
                         );
                     }
 
-                    if (outputSocket) {
+                    if (outputNode) {
+                        const outputSocket = outputNode.outputs[state.activeConnection.outputSocketName];
                         outputSocket.connections = outputSocket.connections.filter(
                             (connectionId) => connectionId !== state.activeConnection.id,
                         );

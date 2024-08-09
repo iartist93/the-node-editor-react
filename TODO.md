@@ -5,7 +5,7 @@
 
 - [x] Feat: Highlight selected node
 - [x] Fix: The connection goes to (0, 0) when first created, but after moving the canvas.
-- [ ] Feat Connection of socket execute the socket function to connect input to output.
+- [x] Feat Connection of socket execute the socket function to connect input to output.
 - [ ] Feat: Remove connection won't reset the socket value to default, but instead keep it as is.
 - [ ] Feat: Can only connect sockets of the same type.
 - [ ] Style: Color of the connections.
@@ -14,22 +14,22 @@
 ## V2
 
 - [ ] Feat: Build a custom color picker component, as the default one is not standard across all browsers.
-  - [ ] Can save colors to a palette.
-  - [ ] Can pick color from the browser.
-  - [ ] Can switch HSL/RGB/HEXA
+    - [ ] Can save colors to a palette.
+    - [ ] Can pick color from the browser.
+    - [ ] Can switch HSL/RGB/HEXA
 
 ## V3
 
 - [ ] Feat: Implement more fundamental ThreeJS nodes.
-  - [ ] Vector2 Node
-  - [ ] Vector3 Node
-  - Example Math of 2 or more numbers
+    - [ ] Vector2 Node
+    - [ ] Vector3 Node
+    - Example Math of 2 or more numbers
 
 ## V4
 
 - [ ] Feat: Implement topological sort to execute the graph.
-  - Recreate this example (https://app.nodetoy.co/file/9844f954-16f7-443f-bbf8-a90b59d863bf) using the graph.
-  - What nodes in this projects?
+    - Recreate this example (https://app.nodetoy.co/file/9844f954-16f7-443f-bbf8-a90b59d863bf) using the graph.
+    - What nodes in this projects?
 
 ## V5
 
@@ -40,9 +40,9 @@
 ## V6
 
 - [ ] Feat: Try to get a list of all the API functions that ThreeJS provides.
-  - [ ] get the input and output of each function.
-  - [ ] get the type of each input and output.
-  - [ ] get the description of each function.
+    - [ ] get the input and output of each function.
+    - [ ] get the type of each input and output.
+    - [ ] get the description of each function.
 - [ ] Feat: Implement a search bar to search for nodes.
 
 ## V7

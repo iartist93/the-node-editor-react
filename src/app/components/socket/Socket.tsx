@@ -10,30 +10,53 @@ import {useGraph} from "../../hooks/useGraph";
 export function Socket(socketData: SocketData) {
     const {id, nodeId, name, type, datatype, connections} = socketData;
     const size = 15;
-
+    
+    const allConnections = useStore((state) => state.connections);
     const activeConnection = useStore((state) => state.activeConnection);
     const addNewConnection = useStore((state) => state.addNewConnection);
     const updateConnection = useStore((state) => state.updateConnection);
     const removeConnection = useStore((state) => state.removeConnection);
 
+
     const socketRef = useRef(null);
     const {onConnectionsChange} = useGraph()
 
+    /**
+     * Check if the connection is valid - don't connect to self
+     * @param socketData
+     */
+    const checkIfValidConnection = (socketData: SocketData) => {
+        if (activeConnection) {
+            if (type === 'input') {
+                if (activeConnection.outputSocketId === id) {
+                    return false;
+                }
+            } else {
+                if (activeConnection.inputSocketId === id) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * input socket can only have one connection
+     * output socket can have multiple connections
+     * @param event
+     */
     const handleSocketClick = (event: any) => {
         event.stopPropagation();
 
-        // rule: don't connect to the self
-        if (
-            activeConnection &&
-            ((type === 'output' && activeConnection.outputSocketId === id) ||
-                (type === 'input' && activeConnection.inputSocketId === id))
-        ) {
+        if (!checkIfValidConnection(socketData)) {
             return;
         }
 
+        // check if there's an existing connections to the socket or is it empty
         if (connections.length > 0) {
-            const connection = connections[0];
-
+            const connectionId = connections[0];
+            const connection = allConnections.find((c) => c.id === connectionId);
             if (activeConnection) {
                 if (type === 'input') {
                     removeConnection(connection.id);
