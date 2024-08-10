@@ -27,7 +27,7 @@ export function OutputSlot({socketData}) {
         <div className='no-drag flex flex-col relative px-4 my-6'>
             <div className='absolute right-4 top-[50%] -translate-y-[50%]'>
                 <p className='text-black'>
-                    {name} <b>({displayValue})</b>
+                    {name}
                 </p>
             </div>
             <Socket

@@ -3,6 +3,7 @@ import React from 'react';
 import {PrincipleShader} from '@/app/components/node/PrincipleShader';
 import {AddNode} from '@/app/components/node/AddNode';
 import {MixNode} from "./MixNode";
+import {FloatNode} from "./FloatNode";
 
 export type Position = {
     x: number;
@@ -60,18 +61,18 @@ export const nodeTypes: NodeTypes = {
     color: ColorNode,
     shader: PrincipleShader,
     add: AddNode,
-    mix: MixNode
+    mix: MixNode,
+    float: FloatNode
 };
 
 export const socketColors: SocketColors = {
     default: '#000',
-    // number: "#f39c12",
-    // color: "#e74c3c",
-    number: '#e1e1ec',
-    color: '#eea622',
+    number: '#3D70B3',
+    color: '#E0B53B',
     boolean: '#3498db',
     string: '#9b59b6',
     object: '#2ecc71',
     array: '#1abc9c',
     function: '#e67e22',
+    shader: "#4E9450",
 };

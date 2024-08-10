@@ -7,8 +7,8 @@ export function BooleanSocket({socketData}) {
     const {id, nodeId, value, name, dataType, connections} = socketData
     const {onInputChange} = useGraph()
 
-    const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onInputChange(socketData, parseFloat(e.target.value))
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        onInputChange(socketData, e.target.checked)
     };
 
     return (
@@ -19,7 +19,7 @@ export function BooleanSocket({socketData}) {
             <input
                 type="checkbox"
                 checked={value}
-                onChange={handleColorChange}
+                onChange={handleInputChange}
                 className="w-4 h-4"
             />
             <Socket

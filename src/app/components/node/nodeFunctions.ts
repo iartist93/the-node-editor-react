@@ -1,5 +1,12 @@
 import {Color} from "three";
 
+const float = (inputs) => {
+    console.log("float")
+    return {
+        result: parseFloat(inputs.float.value)
+    }
+}
+
 const add = (inputs) => {
     console.log("add")
     const result = parseFloat(inputs.x.value + inputs.y.value).toFixed(2)
@@ -41,5 +48,5 @@ const mix = (inputs) => {
     }
 }
 
-const nodeFunctions = {add, shader, color, mix};
+const nodeFunctions = {add, shader, color, mix, float};
 export default nodeFunctions;

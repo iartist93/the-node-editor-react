@@ -21,25 +21,32 @@ export function RowColorSocket({socketData}) {
 
     const color = useMemo(() => convertColorToHex(value), [value])
 
+    const disabled = useMemo(() => connections.length > 0, [connections])
+
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onInputChange(socketData, new Color(e.target.value))
     };
 
     return (
         <div className='no-drag flex justify-between items-center relative px-4 my-2 h-6'>
+
             <div className='select-none pointer-events-none text-xs text-black font-bold'>
                 <p>{name}</p>
             </div>
 
-            <div className='relative h-full'>
-                <input
-                    type='color'
-                    value={color}
-                    onChange={handleColorChange}
-                    className='w-32 h-full'
-                />
-                <p className='text-white text-xs absolute right-2 top-1'>{color}</p>
-            </div>
+            {
+                !disabled &&
+                <div className='relative h-full'>
+                    <input
+                        type='color'
+                        value={color}
+                        onChange={handleColorChange}
+                        className='w-32 h-full'
+                    />
+                    <p className='text-white text-xs absolute right-2 top-1'>{color}</p>
+                </div>
+            }
+            
             <Socket
                 id={id}
                 nodeId={nodeId}

@@ -3,6 +3,9 @@
 - [ ] Drag from socket should create a connection.
 - [ ] Connection between 2 sockets of different type will cast if possible (check the ouptut value type and the input
   socket type and invoke the conversion function if possible) else remove the active connection.
+- [ ] Somehow we need to design the node preview -- e.g. want to debug the result of the current selected node
+    - [ ] Option1: We can preview in place - inside the node itself.
+    - [ ] Option2: We can preview the result in the viewport.
 
 ## V1
 
@@ -15,6 +18,18 @@
 - [x] Feat: When socket is connected, we can't adjust its value, should only display the socket name.
 
 ## V2
+
+- [ ] add node category to the node defination.
+- [ ] All the nodes looks the same right now, either add an icon for each node or bg color for each node (category) each
+  all the math nodes has the same bg color or blue.
+    - [ ] Option 1: instead of change the bg of the whole node we can change the header color only (blender + unity +
+      unreal + substance designer)
+- [ ] socket color has to match the node color, e.g. I know I can connect a color node to this socket.
+- [ ] if I change the mix node for example to mix float, then the color code of the node is different than mix colors.
+- [ ] so we categorize the node by what data it operators on (float, color, vector, etc).
+- [ ] add a new socket type dropdown => specially for the mix node to change the input/output type and function.
+
+# V2.2
 
 - [ ] Feat: Implement more fundamental ThreeJS nodes.
     - [ ] Vector2 Node

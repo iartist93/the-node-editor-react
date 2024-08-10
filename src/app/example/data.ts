@@ -24,11 +24,14 @@ type NodeProps = {
 
 import {NodeData} from '@/app/components/node/utils';
 import {Color} from "three";
+import {socketColors} from "../components/node/utils";
 
 export const nodes: NodeData[] = [
     {
         id: '1',
         type: 'color',
+        name: 'Color',
+        color: socketColors.color,
         inputs: {
             color: {
                 name: 'color',
@@ -55,13 +58,15 @@ export const nodes: NodeData[] = [
         },
         data: {},
         position: {
-            x: 100,
-            y: 100,
+            x: 492,
+            y: 59,
         },
     },
     {
         id: '2',
         type: 'color',
+        name: 'Color',
+        color: socketColors.color,
         inputs: {
             color: {
                 name: 'color',
@@ -88,13 +93,15 @@ export const nodes: NodeData[] = [
         },
         data: {},
         position: {
-            x: 300,
-            y: 600,
+            x: 484,
+            y: 432,
         },
     },
     {
         id: '3',
         type: 'shader',
+        name: 'Principle Shader',
+        color: socketColors.shader,
         inputs: {
             albedo: {
                 name: 'albedo',
@@ -146,13 +153,15 @@ export const nodes: NodeData[] = [
         outputs: {},
         data: {},
         position: {
-            x: 600,
-            y: 100,
+            x: 1346,
+            y: 320,
         },
     },
     {
         id: '4',
         type: 'add',
+        name: 'Add',
+        color: socketColors.number,
         inputs: {
             x: {
                 name: 'x',
@@ -174,14 +183,16 @@ export const nodes: NodeData[] = [
             },
         },
         position: {
-            x: 500,
-            y: 800,
+            x: 1049,
+            y: 929,
         },
         data: {},
     },
     {
         id: '5',
         type: 'add',
+        name: 'Add',
+        color: socketColors.number,
         inputs: {
             x: {
                 name: 'x',
@@ -203,13 +214,15 @@ export const nodes: NodeData[] = [
         },
         data: {},
         position: {
-            x: 700,
-            y: 400,
+            x: 626,
+            y: 930,
         },
     },
     {
         id: 'mix1',
         type: 'mix',
+        name: 'Mix',
+        color: socketColors.number,
         inputs: {
             color1: {
                 name: 'color1',
@@ -236,8 +249,33 @@ export const nodes: NodeData[] = [
         },
         data: {},
         position: {
-            x: 900,
-            y: 900,
+            x: 953,
+            y: 286,
+        },
+    },
+    {
+        id: 'float1',
+        type: 'float',
+        name: 'Float',
+        color: socketColors.number,
+        inputs: {
+            float: {
+                name: 'float',
+                value: 0.5,
+                dataType: 'number',
+            },
+        },
+        outputs: {
+            result: {
+                name: 'result',
+                value: 3,
+                dataType: 'number',
+            },
+        },
+        data: {},
+        position: {
+            x: 200,
+            y: 950,
         },
     },
 ];

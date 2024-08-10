@@ -31,14 +31,6 @@ export function ColorSocket({socketData, height = 200}) {
                     <p className={cc(['font-bold'])}>{value}</p>
                 </div>
             </div>
-            <Socket
-                id={id}
-                nodeId={nodeId}
-                type={'input'}
-                dataType={'color'}
-                value={value}
-                connections={connections}
-            />
         </div>
     );
 }
