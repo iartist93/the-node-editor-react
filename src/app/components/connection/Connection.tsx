@@ -93,7 +93,7 @@ export function Connection({connectionData}: ConnectionData) {
         <path
             d={path}
             stroke='#009903'
-            strokeWidth='2'
+            strokeWidth='3'
             fill='none'
             strokeLinecap='round'
         />

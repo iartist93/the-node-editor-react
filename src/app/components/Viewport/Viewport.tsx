@@ -11,9 +11,10 @@ export default function Viewport() {
 
     return (
         <div className="h-100 w-1/3 bg-stone-100">
-            <h1 className="font-bold text-lg text-blue-950">
-                flatShading {flatShading ? "true" : "false"}
-            </h1>
+            <div className="bg-gray-100 flex justify-center items-center h-12">
+                <h1 className="font-bold text-blue-950">Viewport</h1>
+            </div>
+
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
                 <spotLight
@@ -41,7 +42,7 @@ function Box(props: ThreeElements["mesh"]) {
     const [hovered, setHover] = useState(false);
     const [active, setActive] = useState(false);
     useFrame((state, delta) => (meshRef.current.rotation.x += delta));
-    
+
     const shaderNode = useStore((store) => store.nodes.find((node) => node.type === 'shader'));
 
     return (

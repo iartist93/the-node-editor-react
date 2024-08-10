@@ -55,7 +55,11 @@ export default function Editor({children}: { children: ReactNode }) {
 
     return (
         <div className="flex-1 border-r border-stone-200">
+
             <div ref={editorContainer} className="editor-container bg-stone-100">
+                <div className="bg-gray-100 flex justify-center items-center h-12">
+                    <h1 className="font-bold text-blue-950">Editor</h1>
+                </div>
                 <div
                     ref={canvas}
                     id="canvas"

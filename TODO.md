@@ -16,23 +16,23 @@
 
 ## V2
 
-- [ ] Feat: Build a custom color picker component, as the default one is not standard across all browsers.
-    - [ ] Can save colors to a palette.
-    - [ ] Can pick color from the browser.
-    - [ ] Can switch HSL/RGB/HEXA
-
-## V3
-
 - [ ] Feat: Implement more fundamental ThreeJS nodes.
     - [ ] Vector2 Node
     - [ ] Vector3 Node
     - Example Math of 2 or more numbers
 
-## V4
+## V3
 
 - [ ] Feat: Implement topological sort to execute the graph.
     - Recreate this example (https://app.nodetoy.co/file/9844f954-16f7-443f-bbf8-a90b59d863bf) using the graph.
     - What nodes in this projects?
+
+## V4
+
+- [ ] Feat: Build a custom color picker component, as the default one is not standard across all browsers.
+    - [ ] Can save colors to a palette.
+    - [ ] Can pick color from the browser.
+    - [ ] Can switch HSL/RGB/HEXA
 
 ## V5
 

@@ -207,4 +207,37 @@ export const nodes: NodeData[] = [
             y: 400,
         },
     },
+    {
+        id: 'mix1',
+        type: 'mix',
+        inputs: {
+            color1: {
+                name: 'color1',
+                value: new Color(0.3, 0, 0),
+                dataType: 'color',
+            },
+            color2: {
+                name: 'color2',
+                value: new Color(0.3, 0, 0),
+                dataType: 'color',
+            },
+            fraction: {
+                name: 'fraction',
+                value: 0.5,
+                dataType: 'number',
+            }
+        },
+        outputs: {
+            result: {
+                name: 'result',
+                value: new Color(0.3, 0, 0),
+                dataType: 'color',
+            },
+        },
+        data: {},
+        position: {
+            x: 900,
+            y: 900,
+        },
+    },
 ];

@@ -2,6 +2,7 @@ import {ColorNode} from '@/app/components/node/ColorNode';
 import React from 'react';
 import {PrincipleShader} from '@/app/components/node/PrincipleShader';
 import {AddNode} from '@/app/components/node/AddNode';
+import {MixNode} from "./MixNode";
 
 export type Position = {
     x: number;
@@ -59,6 +60,7 @@ export const nodeTypes: NodeTypes = {
     color: ColorNode,
     shader: PrincipleShader,
     add: AddNode,
+    mix: MixNode
 };
 
 export const socketColors: SocketColors = {

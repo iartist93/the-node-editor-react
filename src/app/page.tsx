@@ -48,7 +48,7 @@ export default function Home() {
             </Editor>
             <Viewport></Viewport>
 
-            {
+            {false &&
                 <pre className='fixed top-0 right-0 h-screen overflow-auto select-none bg-slate-50/30 text-blue-950'>
           {JSON.stringify(state, null, 2)}
         </pre>
