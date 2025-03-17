@@ -32,7 +32,6 @@ export default function Viewport() {
                     <Box position={[-1.2, 0, 0]}/>
                 </Center>
             </Canvas>
-            ,
         </div>
     );
 }
